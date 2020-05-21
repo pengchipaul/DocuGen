@@ -22,6 +22,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/app', 'HomeController@app')->name('app');
+Route::get('/app/{any?}', function ($any) {
+    return redirect()->route('app');
+})->where('any','.*');
 
 Route::namespace('User')->prefix('web_api')->middleware('auth')->group(function () {
     Route::get('auth/profile', 'ProfileController@getProfile');

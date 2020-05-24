@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import { Nav } from 'react-bootstrap';
 
 function NavBar(props: RouteComponentProps) {
   const navigateTo = (link: string) => {
-    localStorage.setItem("url", "/app/" + link);
-    props.history.push("/app/" + link);
+    props.history.push("/app" + link);
   };
 
   useEffect(() => {
@@ -16,19 +16,11 @@ function NavBar(props: RouteComponentProps) {
 
   return (
     <div className="container">
-      <div className="row justify-content-center">
-        <h3>NavBar Example </h3>
-
-        <button onClick={() => navigateTo("home")} className="btn btn-primary">
-          Go Home
-        </button>
-        <button
-          onClick={() => navigateTo("example")}
-          className="btn btn-primary"
-        >
-          Go to Example
-        </button>
-      </div>
+        <Nav className="flex-column">
+          <Nav.Link onClick={() => navigateTo("")}>Home</Nav.Link>
+          <Nav.Link onClick={() => navigateTo("/templates")}>Templates</Nav.Link>
+          <Nav.Link onClick={() => navigateTo("/paragraphs")}>Paragraphs</Nav.Link>
+        </Nav>
     </div>
   );
 }

@@ -1,26 +1,34 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { withRouter, RouteComponentProps } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
 
-import { RootState } from '../store/reducers/rootReducer';
-import { Profile } from '../store/reducers/profileReducer';
+import { RootState } from "../store/reducers/rootReducer";
+import { Profile } from "../store/reducers/profileReducer";
 
+function Home(props: RouteComponentProps) {
+  const profile: Profile = useSelector(
+    (state: RootState) => state.profile.profile
+  );
 
-function Home() {
-    const profile: Profile = useSelector( (state: RootState) => state.profile.profile);
+  useEffect(() => {
+    localStorage.setItem("url", props.history.location.pathname);
+  }, []);
 
-    return (
-        <div className="container">
-            <div className="row justify-content-center">
-                <div className="col-md-8">
-                    <div className="card">
-                        <div className="card-header">Welcome, {profile && profile.username} </div>
-
-                        <div className="card-body">I'm an example component!!!</div>
-                    </div>
-                </div>
+  return (
+    <Container fluid>
+      <Row>
+        <Col>
+          <div className="card">
+            <div className="card-header">
+              Welcome, {profile && profile.username}{" "}
             </div>
-        </div>
-    )
+            <div className="card-body">I'm an example component!!!</div>
+          </div>
+        </Col>
+      </Row>
+    </Container>
+  );
 }
 
-export default Home;
+export default withRouter(Home);

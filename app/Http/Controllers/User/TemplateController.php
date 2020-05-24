@@ -18,9 +18,9 @@ class TemplateController extends Controller
     public function index(){
         try {
             $templates = $this->repo->index();
-            return response()->json(["templates"=>$templates], 200);
+            return response()->json(["data"=>$templates], 200);
         } catch (\Exception $e) {
-            return response()->json(["server error"], 500);
+            return response()->json(["message" => "server error"], 500);
         }
     }
 
@@ -30,10 +30,10 @@ class TemplateController extends Controller
             'description' => 'nullable|string|max:500'
         ]);
         try {
-            $this->repo->insert($validated);
-            return response()->json(['success'], 200);
+            $template = $this->repo->insert($validated);
+            return response()->json(["message" => "success", "data" => $template], 200);
         } catch(\Exception $e) {
-            return response()->json(["serer error"], 500)
+            return response()->json(["message" => "serer error"], 500);
         }
         
     }

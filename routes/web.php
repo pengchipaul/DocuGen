@@ -34,4 +34,18 @@ Route::namespace('User')->prefix('web_api')->middleware('auth')->group(function 
         Route::get('all', 'TemplateController@index');
         Route::post('store', 'TemplateController@store');
     });
+
+    /* paragraphs */
+    Route::prefix('paragraphs')->group(function() {
+        Route::get('all', 'ParagraphController@index');
+        Route::post('store', 'ParagraphController@store');
+        Route::post('add_tag', 'ParagraphController@addTag');
+        Route::delete('remove_tag', 'ParagraphController@removeTag');
+    });
+
+    /* tags */
+    Route::prefix('tags')->group(function() {
+        Route::get('all', 'TagController@index');
+        Route::post('store', 'TagController@store');
+    });
 });

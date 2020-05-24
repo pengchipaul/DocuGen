@@ -12,8 +12,9 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import Home from "./pages/Home";
 import { getProfile } from "./store/actions/profileAction";
-import Example from "./pages/Example";
 import NavBar from "./widgets/NavBar";
+import Template from "./pages/Template";
+import Paragraph from "./pages/Paragraph";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,9 +33,9 @@ function App() {
             </Col>
             <Col xl={10} lg={9}>
               <Switch>
-                <Route exact path="/app" />
-                <Route path="/app/home" component={Home} />
-                <Route path="/app/example" component={Example} />
+                <Route exact path="/app" component={Home} />
+                <Route path="/app/templates" component={Template} />
+                <Route path="/app/paragraphs" component={Paragraph} />
               </Switch>
             </Col>
           </Row>

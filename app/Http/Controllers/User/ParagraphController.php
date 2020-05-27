@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 use App\Http\Controllers\Repository\ParagraphRepository;
+use App\Paragraph;
 
 class ParagraphController extends Controller
 {
@@ -19,9 +21,10 @@ class ParagraphController extends Controller
 
     public function index() {
         try {
-            $paragraphs = $this->repo->index();
-            return response()->json(["message" => "success", "data" => $paragraphs]. 200);
+            $paragraphs =  $this->repo->index();
+            return response()->json(["message" => "success", "data" => $paragraphs], 200);
         } catch (\Exception $e){
+            Log::debug($e);
             return response()->json(["message" => "server error"], 500);
         }
     }

@@ -1,17 +1,26 @@
 import { combineReducers, AnyAction } from 'redux';
-import { profileReducer, ProfileState } from './profileReducer';
+
+import { profileReducer } from './profileReducer';
+import { ProfileState } from "../types/profileTypes";
+import { paragraphReducer } from "./paragraphReducer";
+import { ParagraphState } from "../types/paragraphTypes";
 
 export interface RootState {
     profile: ProfileState
+    paragraphs: ParagraphState
 }
 
 const appReducer = combineReducers({
-    profile: profileReducer
+    profile: profileReducer,
+    paragraphs: paragraphReducer
 });
 
 const initState: RootState = {
     profile: {
         profile: null
+    },
+    paragraphs: {
+        paragraphs: []
     }
 };
 

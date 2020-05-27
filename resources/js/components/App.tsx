@@ -3,15 +3,13 @@ import { useDispatch } from "react-redux";
 import {
   BrowserRouter as Router,
   Route,
-  Link,
-  Switch,
-  RouteComponentProps,
-  Redirect,
+  Switch
 } from "react-router-dom";
 import { Container, Row, Col } from "react-bootstrap";
 
 import Home from "./pages/Home";
 import { getProfile } from "./store/actions/profileAction";
+import { getParagraphs } from "./store/actions/paragraphAction";
 import NavBar from "./widgets/NavBar";
 import Template from "./pages/Template";
 import Paragraph from "./pages/Paragraph";
@@ -21,6 +19,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getProfile());
+    dispatch(getParagraphs());
   }, []);
 
   return (

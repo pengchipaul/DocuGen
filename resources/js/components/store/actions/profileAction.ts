@@ -3,7 +3,7 @@ import { Action } from "redux"
 import axios from "axios"
 
 import { RootState } from "../reducers/rootReducer"
-import { Profile } from "../reducers/profileReducer"
+import { Profile } from "../types/profileTypes"
 
 
 export const getProfile = (): ThunkAction<void, RootState, unknown, Action<String>> => {

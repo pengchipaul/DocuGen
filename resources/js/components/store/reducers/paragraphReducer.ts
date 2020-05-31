@@ -1,7 +1,7 @@
 import { ParagraphState, GET_PARAGRAPHS, ParagraphActionTypes } from "../types/paragraphTypes"
 
 const initState: ParagraphState = {
-    paragraphs: null
+    data: null
 }
 
 export function paragraphReducer(state = initState, action: ParagraphActionTypes): ParagraphState{
@@ -10,7 +10,7 @@ export function paragraphReducer(state = initState, action: ParagraphActionTypes
             console.log(action.payload);
             return {
                 ...state,
-                paragraphs: action.payload
+                data: action.payload
             }
         default:
             return state;

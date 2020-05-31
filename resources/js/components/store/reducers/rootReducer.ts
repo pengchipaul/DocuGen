@@ -17,10 +17,10 @@ const appReducer = combineReducers({
 
 const initState: RootState = {
     profile: {
-        profile: null
+        data: null
     },
     paragraphs: {
-        paragraphs: []
+        data: []
     }
 };
 

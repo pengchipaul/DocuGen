@@ -1,7 +1,7 @@
 import { ProfileState, ProfileActionTypes, LOAD_PROFILE } from "../types/profileTypes";
 
 const initState: ProfileState = {
-    profile: null
+    data: null
 };
 
 export function profileReducer(state = initState, action: ProfileActionTypes): ProfileState{
@@ -9,7 +9,7 @@ export function profileReducer(state = initState, action: ProfileActionTypes): P
         case LOAD_PROFILE:
             return {
                 ...state,
-                profile: action.payload
+                data: action.payload
             }
         default: 
             return state;

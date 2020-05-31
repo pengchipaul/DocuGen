@@ -31,7 +31,6 @@ class ParagraphTagSeeder extends Seeder
         ]);
         $p3 = Paragraph::create([
             "content" => Str::random(100),
-            "note" => "This is testing paragraph 3",
             "user_id" => $user->id
         ]);
 

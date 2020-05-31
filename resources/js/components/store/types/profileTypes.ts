@@ -4,7 +4,7 @@ export interface Profile {
 }
 
 export interface ProfileState {
-    profile: Profile
+    data: Profile
 }
 
 export const LOAD_PROFILE = 'LOAD_PROFILE'

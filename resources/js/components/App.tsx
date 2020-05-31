@@ -11,8 +11,8 @@ import Home from "./pages/Home";
 import { getProfile } from "./store/actions/profileAction";
 import { getParagraphs } from "./store/actions/paragraphAction";
 import NavBar from "./widgets/NavBar";
-import Template from "./pages/Template";
-import Paragraph from "./pages/Paragraph";
+import TemplatePage from "./pages/TemplatePage";
+import ParagraphPage from "./pages/ParagraphPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,14 +27,14 @@ function App() {
       <Router>
         <Container fluid>
           <Row>
-            <Col xl={2} lg={3}>
+            <Col xl={1} lg={2}>
               <NavBar />
             </Col>
-            <Col xl={10} lg={9}>
+            <Col xl={11} lg={10}>
               <Switch>
                 <Route exact path="/app" component={Home} />
-                <Route path="/app/templates" component={Template} />
-                <Route path="/app/paragraphs" component={Paragraph} />
+                <Route path="/app/templates" component={TemplatePage} />
+                <Route path="/app/paragraphs" component={ParagraphPage} />
               </Switch>
             </Col>
           </Row>

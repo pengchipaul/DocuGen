@@ -85,7 +85,7 @@
                 </div>
 
                 <div id="description">
-                    <p>Generate your blocks of sentences with variables and generate an article with these blocks by just filling necessary variables</p>
+                    <p>Generate and manage your paragraphs with variables and generate an article with these paragraphs by just filling necessary variables</p>
                     <div>
                         <p>Developed by Paul Peng</p>
                     </div>

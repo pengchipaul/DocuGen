@@ -1,6 +1,8 @@
-## This project is a document generator. It generates documents from user's templates that have different sections. User can manage their paragraphs and insert those paragraphs to different sections in template. When genrating the documents, the system will detect if user needs to enter values for any varialbes that exist in those paragraphs.     
+## About this project 
 
-## Backend - Laravel; Frontend - React, React Router, Redux, TyptScript, React Bootstrap
+This project is a document generator. It generates documents from user's templates that have different sections. User can manage their paragraphs and insert those paragraphs to different sections in template. When genrating the documents, the system will detect if user needs to enter values for any varialbes that exist in those paragraphs.     
+
+### Backend - Laravel; Frontend - React, React Router, Redux, TyptScript, React Bootstrap
 
 ## More info about Laravel
 

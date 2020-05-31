@@ -2,6 +2,22 @@
 
 This project is a document generator. It generates documents from user's templates that have different sections. User can manage their paragraphs and insert those paragraphs to different sections in a template. When generating the documents, the system will detect if user needs to enter values for any variables that exist in those paragraphs.     
 
+## Progress
+
+- [x] 1.project setup
+- [x] 2.paragraph and tag data model
+- [x] 3.database seeding
+- [ ] 4.paragraph and tag CRUD (in progress)
+- [ ] 5.search paragraphs (by name, tag)
+- [ ] 6.template and section data model
+- [ ] 7.template and section CRUD
+- [ ] 8.section and paragraph CRUD
+- [ ] 9.generate document from template
+- [ ] 10.add varaible in document generation
+- [ ] 11. styling and animation
+and etc
+
+
 ### Backend - Laravel 
 ### Frontend - React, React Router, Redux, TypeScript, React Bootstrap
 

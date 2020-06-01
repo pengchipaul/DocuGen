@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 
-import { RootState } from '../store/reducers/rootReducer'
-import { Profile } from '../store/types/profileTypes'
+import { RootState } from '../../store/reducers/rootReducer'
+import { Profile } from '../../store/types/profileTypes'
 
 function Home(props: RouteComponentProps) {
   const profile: Profile = useSelector(

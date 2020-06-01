@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react'
 import { Card, Button, Overlay, Tooltip, Dropdown } from 'react-bootstrap'
 
-import { Paragraph } from '../../store/types/paragraphTypes'
+import { Paragraph } from '../../../store/types/paragraphTypes'
 import CopyToClipboard from '../../helper/CopyToClipboard'
 
 interface ParagraphItemProps {

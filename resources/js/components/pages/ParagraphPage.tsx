@@ -6,8 +6,8 @@ import { IoIosAddCircle, IoIosSearch } from 'react-icons/io'
 
 import ParagraphItem from '../widgets/paragraph/ParagraphItem'
 import PargraphToolBar from '../widgets/paragraph/PargraphToolBar'
-import { RootState } from '../store/reducers/rootReducer'
-import { Paragraph } from '../store/types/paragraphTypes'
+import { RootState } from '../../store/reducers/rootReducer'
+import { Paragraph } from '../../store/types/paragraphTypes'
 
 
 function ParagraphPage(props: RouteComponentProps) {

@@ -34,6 +34,7 @@ class ParagraphController extends Controller
             'content' => 'required|string|max:1000',
             'note' => 'nullable|string|max:1000'
         ]);
+        $validated["user_id"] = Auth::user()->id;
         try {
             $paragraph = $this->repo->insert($validated);
             return response()->json(["message" => "success", "data" => $paragraph], 200);

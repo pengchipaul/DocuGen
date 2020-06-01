@@ -8,8 +8,8 @@ import {
 import { Container, Row, Col } from "react-bootstrap";
 
 import Home from "./pages/Home";
-import { getProfile } from "./store/actions/profileAction";
-import { getParagraphs } from "./store/actions/paragraphAction";
+import { getProfile } from "../store/actions/profileAction";
+import { getParagraphs } from "../store/actions/paragraphAction";
 import NavBar from "./widgets/NavBar";
 import TemplatePage from "./pages/TemplatePage";
 import ParagraphPage from "./pages/ParagraphPage";

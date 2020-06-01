@@ -13,7 +13,7 @@ This project is a document generator. It generates documents from user's templat
 - [ ] 7.template and section CRUD
 - [ ] 8.section and paragraph CRUD
 - [ ] 9.generate document from template
-- [ ] 10.add varaible in document generation
+- [ ] 10.add variables in document generation
 - [ ] 11. styling and animation
 
 and etc

@@ -7,12 +7,12 @@ import { IoIosAddCircle, IoIosSearch } from 'react-icons/io'
 import ParagraphItem from '../widgets/paragraph/ParagraphItem'
 import PargraphToolBar from '../widgets/paragraph/PargraphToolBar'
 import { RootState } from '../../store/reducers/rootReducer'
-import { Paragraph } from '../../store/types/paragraphTypes'
+import { ParagraphState } from '../../store/types/paragraphTypes'
 
 
 function ParagraphPage(props: RouteComponentProps) {
-  const paragraphs: Paragraph[] = useSelector(
-    (state: RootState) => state.paragraphs.data
+  const paragraphState: ParagraphState = useSelector(
+    (state: RootState) => state.paragraphs
   )
 
   useEffect(() => {
@@ -23,9 +23,9 @@ function ParagraphPage(props: RouteComponentProps) {
     <Container fluid>
       <Row>
         <Col>
-          {paragraphs.length > 0 &&
+          {paragraphState.data.length > 0 &&
             <Row>
-              {paragraphs.map((p) => 
+              {paragraphState.data.map((p) => 
                 <Col md="6" key={p.id.toString()} className="mb-5">
                   <ParagraphItem paragraph={p} />
                 </Col>

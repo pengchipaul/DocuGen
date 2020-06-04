@@ -1,18 +1,22 @@
-import { combineReducers, AnyAction } from 'redux';
+import { combineReducers, AnyAction } from 'redux'
 
-import { profileReducer } from './profileReducer';
-import { ProfileState } from "../types/profileTypes";
-import { paragraphReducer } from "./paragraphReducer";
-import { ParagraphState } from "../types/paragraphTypes";
+import { profileReducer } from './profileReducer'
+import { ProfileState } from "../types/profileTypes"
+import { paragraphReducer } from "./paragraphReducer"
+import { ParagraphState } from "../types/paragraphTypes"
+import { tagReducer } from './tagReducer'
+import { TagState } from '../types/tagTypes'
 
 export interface RootState {
     profile: ProfileState
     paragraphs: ParagraphState
+    tag: TagState
 }
 
 const appReducer = combineReducers({
     profile: profileReducer,
-    paragraphs: paragraphReducer
+    paragraphs: paragraphReducer,
+    tag: tagReducer
 });
 
 const initState: RootState = {
@@ -20,6 +24,9 @@ const initState: RootState = {
         data: null
     },
     paragraphs: {
+        data: []
+    },
+    tag: {
         data: []
     }
 };

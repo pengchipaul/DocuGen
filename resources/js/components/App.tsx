@@ -1,26 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import {
   BrowserRouter as Router,
   Route,
   Switch
-} from "react-router-dom";
-import { Container, Row, Col } from "react-bootstrap";
+} from 'react-router-dom'
+import { Container, Row, Col } from 'react-bootstrap'
 
-import Home from "./pages/Home";
-import { getProfile } from "../store/actions/profileAction";
-import { getParagraphs } from "../store/actions/paragraphAction";
-import NavBar from "./widgets/NavBar";
-import TemplatePage from "./pages/TemplatePage";
-import ParagraphPage from "./pages/ParagraphPage";
+import Home from './pages/Home'
+import { getProfile } from '../store/actions/profileAction'
+import { getParagraphs } from '../store/actions/paragraphAction'
+import { getTags } from '../store/actions/tagAction'
+import NavBar from './widgets/NavBar'
+import TemplatePage from './pages/TemplatePage'
+import ParagraphPage from './pages/ParagraphPage'
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(getProfile());
-    dispatch(getParagraphs());
-  }, []);
+    dispatch(getProfile())
+    dispatch(getParagraphs())
+    dispatch(getTags())
+  }, [])
 
   return (
     <React.Fragment>

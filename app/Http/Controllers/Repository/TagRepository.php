@@ -13,6 +13,12 @@ class TagRepository extends Controller
         return Tag::with('paragraphs')->get();
     }
 
+    public function getByUserId($userId) {
+        return Tag::with('paragraphs')
+            ->where(["user_id" => $userId])
+            ->get();
+    }
+
     public function insert($data) {
         $tag = Tag::create($data);
         return $tag;

@@ -1,13 +1,19 @@
-import { AnyAction } from 'redux';
+import { TagState, TagActionTypes, GET_TAGS } from '../types/tagTypes'
 
-export interface Tag {
-    id: BigInt, 
-    name: String,
-    paragraphs: TagParagraph[]
+const initState: TagState = {
+    data: null
 }
 
-interface TagParagraph {
-    id: BigInt,
-    content: String,
-    note: String,
+export function tagReducer(state = initState, action: TagActionTypes): TagState{
+    switch(action.type){
+        case GET_TAGS:
+            return {
+                ...state,
+                data: action.payload
+            }
+        default:
+            return state;
+    }
 }
+
+

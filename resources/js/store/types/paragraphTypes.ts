@@ -29,9 +29,9 @@ interface GetParagraphsAction {
 
 export const ADD_PARAGRAPH = "ADD_PARAGRAPH"
 
-interface AddParagraph {
+interface AddParagraphAction {
     type: typeof ADD_PARAGRAPH,
     payload: Paragraph
 }
 
-export type ParagraphActionTypes = GetParagraphsAction | AddParagraph
+export type ParagraphActionTypes = GetParagraphsAction | AddParagraphAction

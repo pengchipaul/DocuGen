@@ -7,7 +7,6 @@ const initState: ParagraphState = {
 export function paragraphReducer(state = initState, action: ParagraphActionTypes): ParagraphState{
     switch(action.type){
         case GET_PARAGRAPHS: 
-            console.log(action.payload);
             return {
                 ...state,
                 data: action.payload

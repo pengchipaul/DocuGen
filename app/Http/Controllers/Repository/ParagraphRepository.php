@@ -16,8 +16,8 @@ class ParagraphRepository extends Controller
     }
 
     public function insert($data){
-        $paragraph = new Paragraph($data);
-        if($data->has("tagIds")) {
+        $paragraph = Paragraph::create($data);
+        if(array_key_exists("tagIds", $data)) {
             $paragraph->tags()->attach($data["tagIds"]);
         }
         $paragraph = Paragraph::with("tags")->find($paragraph->id);

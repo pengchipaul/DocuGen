@@ -32,7 +32,8 @@ class ParagraphController extends Controller
     public function store(Request $req) {
         $validated = $req->validate([
             'content' => 'required|string|max:1000',
-            'note' => 'nullable|string|max:1000'
+            'note' => 'nullable|string|max:1000',
+            'tagIds' => 'array'
         ]);
         $validated["user_id"] = Auth::user()->id;
         try {
@@ -41,6 +42,10 @@ class ParagraphController extends Controller
         } catch(\Exception $e) {
             return response()->json(["message" => "server error"], 500);
         }
+    }
+
+    public function update(Request $req){
+        
     }
 
     public function addTag(Request $req){

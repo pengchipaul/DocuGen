@@ -21,6 +21,7 @@ class TagRepository extends Controller
 
     public function insert($data) {
         $tag = Tag::create($data);
+        $tag["paragraphs"] = [];
         return $tag;
     }
 }

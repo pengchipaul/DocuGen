@@ -26,7 +26,7 @@ function ParagraphToolBar() {
       <Modal show={show} onHide={hideForm} size="lg" centered>
         <Modal.Header closeButton>Add new paragraph</Modal.Header>
         <Modal.Body>
-          <ParagraphForm mode="new" paragraph={null} onSubmit={hideForm} />
+          <ParagraphForm onSubmit={hideForm} />
         </Modal.Body>
       </Modal>
       <Button block variant="primary">

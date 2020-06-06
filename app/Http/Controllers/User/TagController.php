@@ -27,4 +27,19 @@ class TagController extends Controller
             return response()->json(["message" => "server error"], 500);
         }
     }
+
+    public function store(Request $req){
+        $validated = $req->validate([
+            "name" => 'required|string|max:100'
+        ]);
+        $validated["user_id"] = Auth::user()->id;
+
+        try {
+            $tag = $this->repo->insert($validated);
+            return response()->json(["message" => "success", "data" => $tag], 200);
+        } catch (\Exception $e) {
+            Log::debug($e);
+            return response()->json(["message" => "server error"], 500);
+        }
+    }
 }

@@ -34,7 +34,7 @@ function ParagraphItem({paragraph}: ParagraphItemProps){
       <Card.Footer>
         {paragraph.note ? <div className="d-inline-block">Note: {paragraph.note}</div> : null}
         <div className="float-right">
-          <Dropdown className="d-inline-block mr-3">
+          <Dropdown className="d-inline-block mr-1">
             <Dropdown.Toggle variant="success" id={"dropdown-p-" + paragraph.id.toLocaleString()}>
               Actions
             </Dropdown.Toggle>
@@ -43,7 +43,7 @@ function ParagraphItem({paragraph}: ParagraphItemProps){
               <Dropdown.Item className="text-danger">Delete</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Button ref={target} onClick={() => copyToClipboard(paragraph.content) }>Copy to clipboard</Button>
+          <Button ref={target} onClick={() => copyToClipboard(paragraph.content) }>Copy</Button>
           <Overlay target={target.current} show={show} placement="top">
             <Tooltip id={"tooltip-p"+paragraph.id.toString()}>
               Copied!

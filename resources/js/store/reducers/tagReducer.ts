@@ -1,4 +1,4 @@
-import { TagState, TagActionTypes, GET_TAGS } from '../types/tagTypes'
+import { TagState, TagActionTypes, GET_TAGS, ADD_TAG } from '../types/tagTypes'
 
 const initState: TagState = {
     data: null
@@ -10,6 +10,11 @@ export function tagReducer(state = initState, action: TagActionTypes): TagState{
             return {
                 ...state,
                 data: action.payload
+            }
+        case ADD_TAG: 
+            state.data.push(action.payload)
+            return {
+                ...state
             }
         default:
             return state;

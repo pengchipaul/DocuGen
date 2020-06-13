@@ -19,7 +19,7 @@ interface ParagraphFormProps {
 function ParagraphForm(props: ParagraphFormProps) {
   const dispatch = useDispatch();
 
-  const tag = useSelector((state: RootState) => state.tag);
+  const tagState = useSelector((state: RootState) => state.tag);
 
   const [content, setContent] = useState("")
   const [note, setNote] = useState("")
@@ -28,10 +28,12 @@ function ParagraphForm(props: ParagraphFormProps) {
   const [addingTag, setAddingTag] = useState(false)
   const [tagText, setTagText] = useState("")
   const [filteredTags, setFilteredTags] = useState([])
+  const [searchText, setSearchText] = useState("")
 
   useEffect(() => {
-    setFilteredTags(tag.data)
-  },tag.data)
+    console.log("testing")
+    filterTags(searchText)
+  }, [tagState])
 
   const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setContent(event.currentTarget.value);
@@ -47,25 +49,36 @@ function ParagraphForm(props: ParagraphFormProps) {
 
   const handleSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     var text = event.currentTarget.value;
-    if(text == null || text == ""){
+    setSearchText(text)
+    filterTags(text)
+  }
 
+  const filterTags = (text: string) => {
+    if (text == null || text == "") {
+      setFilteredTags(tagState.data)
+    } else {
+      setFilteredTags(
+        tagState.data.filter((t) => {
+          return t.name.includes(text)
+        })
+      )
     }
   }
 
   const addTag = (tag: Tag) => {
-    setTags(tags.concat(tag));
-    setTagIds(tagIds.concat(tag.id));
+    setTags(tags.concat(tag))
+    setTagIds(tagIds.concat(tag.id))
   };
 
   const removeTag = (tag: Tag) => {
     setTags(
       tags.filter((t: Tag) => {
-        return t.id != tag.id;
+        return t.id != tag.id
       })
     );
     setTagIds(
       tagIds.filter((t) => {
-        return t != tag.id;
+        return t != tag.id
       })
     );
   };
@@ -119,51 +132,6 @@ function ParagraphForm(props: ParagraphFormProps) {
         />
       </Form.Group>
 
-      {/* search and select new tags */}
-      <Form.Group controlId="tagIdsField">
-        <Form.Label className="mr-2">All tags: </Form.Label>
-        <InputGroup className="mb-2">
-          <FormControl type="text" 
-            placeholder="Search" onChange={handleSearchTextChange} />
-        </InputGroup>
-        {filteredTags.map((tag: Tag) =>
-          !tags.includes(tag) ? (
-            <Button
-              key={tag.id.toString()}
-              variant="success"
-              className="mr-2"
-              onClick={() => addTag(tag)}
-            >
-              {tag.name}
-              <IoIosAddCircleOutline size="1.5em" className="ml-2" />
-            </Button>
-          ) : null
-        )}
-
-        {/* add new tag */}
-        {addingTag ? (
-          <form onSubmit={(e) => onFormSubmit(e)} className="d-inline-block">
-            <Button
-              as="input"
-              onChange={handleTagTextChange}
-              autoFocus
-              type="submit"
-              variant="success"
-            />
-          </form>
-        ) : (
-          <Button
-            variant="success"
-            onClick={() => {
-              setAddingTag(true);
-            }}
-          >
-            Add new
-          </Button>
-        )}
-      </Form.Group>
-      <hr/>
-
       {/* display selected tags */}
       <Form.Group controlId="tagIdsField">
         <Form.Label className="mr-2">Tags selected: </Form.Label>
@@ -179,6 +147,54 @@ function ParagraphForm(props: ParagraphFormProps) {
           </Button>
         ))}
       </Form.Group>
+
+      <hr />
+
+      {/* search and select new tags */}
+      <Form.Group controlId="tagIdsField">
+        <Form.Label className="mr-2">All tags: </Form.Label>
+        <InputGroup className="mb-2">
+          <FormControl type="text"
+            placeholder="Search" onChange={handleSearchTextChange} />
+        </InputGroup>
+        {filteredTags.map((tag: Tag) =>
+          !tags.includes(tag) ? (
+            <Button
+              key={tag.id.toString()}
+              variant="success"
+              className="mr-2 mb-2"
+              onClick={() => addTag(tag)}
+            >
+              {tag.name}
+              <IoIosAddCircleOutline size="1.5em" className="ml-2" />
+            </Button>
+          ) : null
+        )}
+        {/* add new tag */}
+        {addingTag ? (
+          <form onSubmit={(e) => onFormSubmit(e)} className="d-inline-block">
+            <Button
+              as="input"
+              onChange={handleTagTextChange}
+              autoFocus
+              type="submit"
+              variant="success"
+              className="mb-2"
+            />
+          </form>
+        ) : (
+            <Button
+              variant="success"
+              onClick={() => {
+                setAddingTag(true);
+              }}
+              className="mb-2"
+            >
+              Add new
+            </Button>
+          )}
+      </Form.Group>
+
       <Button variant="primary" onClick={submitForm}>
         Submit
       </Button>

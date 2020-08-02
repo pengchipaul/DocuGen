@@ -2,6 +2,8 @@
 
 This project is a document generator. It generates documents from user's templates that have different sections. User can manage their paragraphs and insert those paragraphs to different sections in a template. When generating the documents, the system will detect if user needs to enter values for any variables that exist in those paragraphs.     
 
+Live webiste: https://docugen.pengchipaul.com
+
 ## Progress
 
 - [x] 1.project setup

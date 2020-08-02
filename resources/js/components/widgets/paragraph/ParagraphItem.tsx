@@ -35,35 +35,45 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
           </Button>
         )}
       </Card.Header>
-      <Card.Body>
-        {edit == false && paragraph.content}
-        {edit == true &&
-          <Form.Control
-            as="textarea"
-            rows={3}
-            value={content}
-            onChange={() => { }}
-          />
-        }
+      <Card.Body className="pb-0">
+        <Container fluid className="mb-2">
+          {/* paragraph body */}
+          <Row>
+            <Col>
+            {edit == false && paragraph.content}
+            {edit == true &&
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={content}
+                onChange={() => { }}
+              />
+            }
+            </Col>
+          </Row>
+        </Container>
+
+          <hr className="mt-5 mb-1"/>
+
+        <Container fluid>
+          {/* paragraph note */}
+          <Form.Group as={Row} className="mb-0">
+            <Form.Label column md="auto"><small>Note:</small></Form.Label>
+            {edit == true &&
+              <Col>
+                <Form.Control
+                  type="text"
+                  value={note}
+                  onChange={() => { }}
+                />
+              </Col>
+            }
+            {(edit == false && paragraph.note) && <Col className="m-auto"><small>{paragraph.note}</small></Col>}
+          </Form.Group>
+
+        </Container>
       </Card.Body>
       <Card.Footer>
-        <div className="d-inline-block">
-          <Container fluid>
-            <Form.Group as={Row}>
-              <Form.Label column md="auto">Note:</Form.Label>
-              {edit == true &&
-                <Col>
-                  <Form.Control
-                    type="text"
-                    value={note}
-                    onChange={() => { }}
-                  />
-                </Col>
-              }
-              {(edit == false && paragraph.note) && <Col><p>{paragraph.note}</p></Col>}
-            </Form.Group>
-          </Container>
-        </div>
         <div className="float-right">
           {/* exit edit mode */}
           {edit == true &&

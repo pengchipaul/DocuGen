@@ -7,7 +7,7 @@ import { IoIosAddCircle, IoIosSearch } from 'react-icons/io'
 import ParagraphItem from '../widgets/paragraph/ParagraphItem'
 import PargraphToolBar from '../widgets/paragraph/PargraphToolBar'
 import { RootState } from '../../store/reducers/rootReducer'
-import { ParagraphState } from '../../store/types/paragraphTypes'
+import { ParagraphState, Paragraph } from '../../store/types/paragraphTypes'
 
 
 function ParagraphPage(props: RouteComponentProps) {
@@ -19,26 +19,40 @@ function ParagraphPage(props: RouteComponentProps) {
     localStorage.setItem("url", props.history.location.pathname);
   }, [])
 
+  function sortByDate(array: Paragraph[]): Paragraph[]{
+      return array.sort(function(a: Paragraph, b: Paragraph) {
+        return compareDate(a.updated_at, b.updated_at)
+      });
+  }
+
+  function compareDate(date1: Date, date2: Date){
+      if(date1 > date2) {
+          return -1;
+      } else {
+          return 1;
+      }
+  }
+
   return (
     <Container fluid>
       <Row>
         <Col>
           {paragraphState.data.length > 0 &&
             <Row>
-              {paragraphState.data.map((p) => 
-                <Col md="6" key={p.id.toString()} className="mb-5">
+              {sortByDate(paragraphState.data).map((p) =>
+                <Col sm="12" key={p.id.toString()} className="mb-5">
                   <ParagraphItem paragraph={p} />
                 </Col>
               )}
-            </Row>  
+            </Row>
           }
         </Col>
         <Col md="auto">
           <PargraphToolBar />
         </Col>
       </Row>
-      
-      
+
+
     </Container>
   )
 }

@@ -1,8 +1,9 @@
 export interface Paragraph {
     id: BigInt,
-    content: string, 
+    content: string,
     note: string,
-    tags: ParagraphTag[]
+    tags: ParagraphTag[],
+    updated_at: Date
 }
 
 interface ParagraphTag {
@@ -11,6 +12,7 @@ interface ParagraphTag {
 }
 
 export interface ParagraphInputModel {
+    id: BigInt,
     content: string,
     note: string,
     tagIds: BigInt[]

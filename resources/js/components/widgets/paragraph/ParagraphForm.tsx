@@ -13,7 +13,7 @@ import { Tag, TagInputModel } from "../../../store/types/tagTypes";
 import { addTagAction } from "../../../store/actions/tagAction";
 
 interface ParagraphFormProps {
-  onSubmit: Function;
+  onSubmit: Function
 }
 
 function ParagraphForm(props: ParagraphFormProps) {
@@ -23,28 +23,31 @@ function ParagraphForm(props: ParagraphFormProps) {
 
   const [content, setContent] = useState("")
   const [note, setNote] = useState("")
-  const [tags, setTags] = useState([])
-  const [tagIds, setTagIds] = useState([])
+
+  // tags that have been added
+  const [addedTags, setAddedTags] = useState([])
+  // if user is adding tag
   const [addingTag, setAddingTag] = useState(false)
+  // text of adding tag
   const [tagText, setTagText] = useState("")
+
   const [filteredTags, setFilteredTags] = useState([])
   const [searchText, setSearchText] = useState("")
 
   useEffect(() => {
-    console.log("testing")
     filterTags(searchText)
   }, [tagState])
 
   const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setContent(event.currentTarget.value);
+    setContent(event.currentTarget.value)
   };
 
   const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNote(event.currentTarget.value);
+    setNote(event.currentTarget.value)
   };
 
   const handleTagTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTagText(event.currentTarget.value);
+    setTagText(event.currentTarget.value)
   };
 
   const handleSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,62 +62,63 @@ function ParagraphForm(props: ParagraphFormProps) {
     } else {
       setFilteredTags(
         tagState.data.filter((t) => {
-          return t.name.includes(text)
+          return t.name.toUpperCase().includes(text.toUpperCase())
         })
       )
     }
   }
 
   const addTag = (tag: Tag) => {
-    setTags(tags.concat(tag))
-    setTagIds(tagIds.concat(tag.id))
-  };
+    setAddedTags(addedTags.concat(tag))
+  }
 
   const removeTag = (tag: Tag) => {
-    setTags(
-      tags.filter((t: Tag) => {
+    setAddedTags(
+      addedTags.filter((t: Tag) => {
         return t.id != tag.id
       })
-    );
-    setTagIds(
-      tagIds.filter((t) => {
-        return t != tag.id
-      })
-    );
-  };
+    )
+  }
 
-  const onFormSubmit = (e: React.FormEvent) => {
+  const onTagFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (tagText == "") {
-      return;
+      return
     }
     var tagInput: TagInputModel = {
       name: tagText,
-    };
-    dispatch(addTagAction(tagInput));
-    setAddingTag(false);
-    setTagText("");
-  };
+    }
+    dispatch(addTagAction(tagInput))
+    setAddingTag(false)
+    setTagText("")
+  }
 
-  function submitForm() {
+  function submitParagraphForm() {
     if (!validateInput()) {
       return;
     }
+
+    var tagIds: BigInt[] = []
+    addedTags.forEach((tag: Tag) => {
+      tagIds.push(tag.id)
+    })
+
     var paragraphInputModel: ParagraphInputModel = {
+      id: null,
       content: content,
       note: note,
       tagIds: tagIds,
-    };
-    dispatch(addParagraph(paragraphInputModel));
+    }
+    dispatch(addParagraph(paragraphInputModel))
 
-    props.onSubmit();
+    props.onSubmit()
   }
 
   function validateInput() {
     if (content == "") {
-      return false;
+      return false
     }
-    return true;
+    return true
   }
 
   return (
@@ -135,7 +139,7 @@ function ParagraphForm(props: ParagraphFormProps) {
       {/* display selected tags */}
       <Form.Group controlId="tagIdsField">
         <Form.Label className="mr-2">Tags selected: </Form.Label>
-        {tags.map((tag: Tag) => (
+        {addedTags.map((tag: Tag) => (
           <Button
             key={tag.id.toString()}
             variant="danger"
@@ -158,7 +162,7 @@ function ParagraphForm(props: ParagraphFormProps) {
             placeholder="Search" onChange={handleSearchTextChange} />
         </InputGroup>
         {filteredTags.map((tag: Tag) =>
-          !tags.includes(tag) ? (
+          !addedTags.includes(tag) ? (
             <Button
               key={tag.id.toString()}
               variant="success"
@@ -172,7 +176,7 @@ function ParagraphForm(props: ParagraphFormProps) {
         )}
         {/* add new tag */}
         {addingTag ? (
-          <form onSubmit={(e) => onFormSubmit(e)} className="d-inline-block">
+          <form onSubmit={(e) => onTagFormSubmit(e)} className="d-inline-block">
             <Button
               as="input"
               onChange={handleTagTextChange}
@@ -195,7 +199,7 @@ function ParagraphForm(props: ParagraphFormProps) {
           )}
       </Form.Group>
 
-      <Button variant="primary" onClick={submitForm}>
+      <Button variant="primary" onClick={submitParagraphForm}>
         Submit
       </Button>
     </React.Fragment>

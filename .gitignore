@@ -17,3 +17,4 @@ yarn-error.log
 /public/js/popper.js
 /public/js/app.js.map
 /public/js/popper.map.js
+/public/mix-manifest.json

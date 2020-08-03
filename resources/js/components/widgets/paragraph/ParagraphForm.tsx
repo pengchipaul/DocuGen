@@ -17,10 +17,10 @@ interface ParagraphFormProps {
 }
 
 function ParagraphForm(props: ParagraphFormProps) {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
+  const tagState = useSelector((state: RootState) => state.tag)
 
-  const tagState = useSelector((state: RootState) => state.tag);
-
+  /* states */
   const [content, setContent] = useState("")
   const [note, setNote] = useState("")
 
@@ -38,6 +38,7 @@ function ParagraphForm(props: ParagraphFormProps) {
     filterTags(searchText)
   }, [tagState])
 
+  /* input handlers */
   const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setContent(event.currentTarget.value)
   };
@@ -56,6 +57,7 @@ function ParagraphForm(props: ParagraphFormProps) {
     filterTags(text)
   }
 
+  /* tag management */
   const filterTags = (text: string) => {
     if (text == null || text == "") {
       setFilteredTags(tagState.data)
@@ -80,6 +82,7 @@ function ParagraphForm(props: ParagraphFormProps) {
     )
   }
 
+  /* form submission */
   const onTagFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (tagText == "") {
@@ -93,7 +96,7 @@ function ParagraphForm(props: ParagraphFormProps) {
     setTagText("")
   }
 
-  function submitParagraphForm() {
+  const submitParagraphForm = () => {
     if (!validateInput()) {
       return;
     }
@@ -114,8 +117,8 @@ function ParagraphForm(props: ParagraphFormProps) {
     props.onSubmit()
   }
 
-  function validateInput() {
-    if (content == "") {
+  const validateInput = () => {
+    if (content == "" || content.trim() == "") {
       return false
     }
     return true
@@ -123,6 +126,7 @@ function ParagraphForm(props: ParagraphFormProps) {
 
   return (
     <React.Fragment>
+      {/* paragraph input */}
       <Form.Group controlId="contentField">
         <Form.Label>Content</Form.Label>
         <Form.Control as="textarea" rows={3} onChange={handleContentChange} />

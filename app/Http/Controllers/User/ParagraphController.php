@@ -31,8 +31,8 @@ class ParagraphController extends Controller
     }
 
     public function store(Request $req) {
-        $this->validateParagraphContent($req);
-        $this->validateParagraphTags($req);
+        if(!($this->validateParagraphContent($req) && $this->validateParagraphTags($req))) 
+            return $this->sendInvalidResponse("create paragraph");
 
         $input = $req->all();
         $input["user_id"] = Auth::user()->id;
@@ -46,12 +46,11 @@ class ParagraphController extends Controller
     }
 
     public function update(Request $req){
-        $this->validateEditAccess($req);
-
-        $this->validateParagraphContent($req);
+        if(!($this->validateEditAccess($req) && $this->validateParagraphContent($req)))
+            return $this->sendInvalidResponse("update paragraph");        
 
         try {
-            $paragraph = $this->repo->update($req->paragraphId, $req);
+            $paragraph = $this->repo->update($req->id, $req->all());
             return response()->json(["message" => "success", "data" => $paragraph], 200);
         } catch(\Exception $e) {
             Log::error($e);
@@ -60,7 +59,8 @@ class ParagraphController extends Controller
     }
 
     public function addTagToParagraph(Request $req){
-        $this->validateModifyTags($req);
+        if(!$this->validateModifyTags($req))
+            return $this->sendInvalidResponse("add tag to paragraph");
 
         try {
             $paragraph = $this->repo->addTag($req->paragraphId, $req->tagId);
@@ -72,7 +72,8 @@ class ParagraphController extends Controller
     }
 
     public function removeTagFromParagraph(Request $req){
-        $this->validateModifyTags($req);
+        if(!$this->validateModifyTags($req))
+            return $this->sendInvalidResponse("remove tag from paragraph");
 
         try {
             $paragraph = $this->repo->removeTag($req->paragraphId, $req->tagId);
@@ -87,14 +88,15 @@ class ParagraphController extends Controller
         $paragraphIds = Auth::user()->paragraphs->pluck('id');
 
         $validator = Validator::make($req->all(), [
-            'paragraphId' => ['required', Rule::in($paragraphIds)]
+            'id' => ['required', Rule::in($paragraphIds)]
         ]);
 
         if($validator->fails()){
-            Log::alert($validator->errors(),
-                ["user" => Auth::user()->email, "action" => "update paragraph"]);
-            return response()->json(["message" => "invalid input"], 403);
+            Log::alert($validator->errors());
+            return false;
         }
+
+        return true;
     }
 
     private function validateParagraphContent(Request $req){
@@ -105,10 +107,11 @@ class ParagraphController extends Controller
         ]);
 
         if($validator->fails()) {
-            Log::alert($validator->errors(),
-                ["user" => Auth::user()->email, "action" => "create/update paragraphs"]);
-            return response()->json(["message" => "invalid input"], 403);
+            Log::alert($validator->errors());
+            return false;
         }
+
+        return true;
     }
 
     private function validateParagraphTags(Request $req){
@@ -119,10 +122,11 @@ class ParagraphController extends Controller
         ]);
 
         if($validator->fails()) {
-            Log::alert($validator->errors(),
-                ["user" => Auth::user()->email, "action" => "create paragraph tags"]);
-            return response()->json(["message" => "invalid input"], 403);
+            Log::alert($validator->errors());
+            return false;
         }
+
+        return true;
     }
 
     private function validateModifyTags(Request $req){
@@ -135,9 +139,10 @@ class ParagraphController extends Controller
         ]);
 
         if($validator->fails()) {
-            Log::alert($validator->errors(),
-                ["user" => Auth::user()->email, "action" => "add/remove tags"]);
-            return response()->json(["message" => "invalid input"], 403);
+            Log::alert($validator->errors());
+            return false;
         }
+
+        return true;
     }
 }

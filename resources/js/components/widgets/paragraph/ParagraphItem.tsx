@@ -1,8 +1,10 @@
 import React, { useRef, useState } from 'react'
 import { Card, Button, Overlay, Tooltip, Dropdown, Form, Col, Row, Container } from 'react-bootstrap'
+import { useDispatch } from 'react-redux'
 
-import { Paragraph } from '../../../store/types/paragraphTypes'
-import CopyToClipboard from '../../helper/CopyToClipboard'
+import { Paragraph, ParagraphInputModel } from '../../../store/types/paragraphTypes'
+import { updateParagraph } from '../../../store/actions/paragraphAction'
+import CopyToClipboard from '../../../helper/CopyToClipboard'
 
 interface ParagraphItemProps {
   paragraph: Paragraph
@@ -18,6 +20,8 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
     }, 1000)
   }
 
+  const dispatch = useDispatch()
+
   /* for updating paragraph */
   const [edit, setEdit] = useState(false)
   const [content, setContent] = useState(paragraph.content)
@@ -25,6 +29,37 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
 
   const [show, setShow] = useState(false)
   const target = useRef(null)
+
+  const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setContent(event.currentTarget.value)
+  }
+
+  const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNote(event.currentTarget.value)
+  }
+
+  const updateParagraphOnClick = () => {
+    /* update only when there are changes */
+    if(content != paragraph.content || note != paragraph.note){
+      var paragraphInputModel: ParagraphInputModel = {
+        id: paragraph.id,
+        content: content,
+        note: note,
+        tagIds: []
+      }
+      dispatch(updateParagraph(paragraphInputModel))
+
+      
+    }
+
+    setEdit(false)
+  }
+
+  const cancelUpdate = () => {
+    setContent(paragraph.content)
+    setNote(paragraph.note)
+    setEdit(false)
+  }
 
   return (
     <Card>
@@ -46,7 +81,7 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
                 as="textarea"
                 rows={3}
                 value={content}
-                onChange={() => { }}
+                onChange={handleContentChange}
               />
             }
             </Col>
@@ -64,7 +99,7 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
                 <Form.Control
                   type="text"
                   value={note}
-                  onChange={() => { }}
+                  onChange={handleNoteChange}
                 />
               </Col>
             }
@@ -75,9 +110,16 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
       </Card.Body>
       <Card.Footer>
         <div className="float-right">
-          {/* exit edit mode */}
+          {/* update paragraph button */}
+          {edit == true && 
+            <Button variant="primary" onClick={() => updateParagraphOnClick()}>
+              Update
+            </Button>
+          }
+
+          {/* exit edit mode button */}
           {edit == true &&
-            <Button variant="light" onClick={() => setEdit(false)}>
+            <Button variant="light" onClick={() => cancelUpdate()}>
               Cancel
             </Button>
           }

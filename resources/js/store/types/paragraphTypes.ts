@@ -36,4 +36,12 @@ interface AddParagraphAction {
     payload: Paragraph
 }
 
+export const UPDATE_PARAGRAPH = "UPDATE_PARAGRAPH"
+
+interface UpdateParagraphAction {
+    type: typeof UPDATE_PARAGRAPH,
+    payload: Paragraph
+}
+
 export type ParagraphActionTypes = GetParagraphsAction | AddParagraphAction
+    | UpdateParagraphAction

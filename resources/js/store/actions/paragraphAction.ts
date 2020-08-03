@@ -3,7 +3,7 @@ import { Action } from "redux"
 import axios from "axios"
 
 import { RootState } from "../reducers/rootReducer"
-import { GET_PARAGRAPHS, ADD_PARAGRAPH, ParagraphInputModel } from "../types/paragraphTypes"
+import { GET_PARAGRAPHS, ADD_PARAGRAPH, UPDATE_PARAGRAPH, ParagraphInputModel } from "../types/paragraphTypes"
 
 export const getParagraphs = (): ThunkAction<void, RootState, unknown, Action<String>> => {
   return (dispatch, getState) => {
@@ -34,6 +34,28 @@ export const addParagraph = (paragraphInputModel: ParagraphInputModel): ThunkAct
         if (res.status === 200) {
           dispatch({
             type: ADD_PARAGRAPH,
+            payload: res.data.data
+          })
+        } else {
+          throw new Error()
+        }
+      })
+      .catch(function (err) {
+
+      })
+      .finally(function () {
+
+      })
+  }
+}
+
+export const updateParagraph = (paragraphInputModel: ParagraphInputModel): ThunkAction<void, RootState, unknown, Action<String>> => {
+  return (dispatch, getState) => {
+    axios.patch("/web_api/paragraphs/update", paragraphInputModel)
+      .then(function (res) {
+        if (res.status === 200) {
+          dispatch({
+            type: UPDATE_PARAGRAPH,
             payload: res.data.data
           })
         } else {

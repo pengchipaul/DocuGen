@@ -130,7 +130,7 @@ class ParagraphController extends Controller
     }
 
     private function validateModifyTags(Request $req){
-        $paragraphIds = Auth::user()->templates->pluck('id');
+        $paragraphIds = Auth::user()->paragraphs->pluck('id');
         $tagIds = Auth::user()->tags->pluck('id');
 
         $validator = Validator::make($req->all(), [

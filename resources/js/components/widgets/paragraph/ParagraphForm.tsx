@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Form, Button, Badge, InputGroup, FormControl } from "react-bootstrap";
-import { IoIosCloseCircleOutline, IoIosAddCircleOutline } from "react-icons/io";
+import React, { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Form, Button, InputGroup, FormControl } from "react-bootstrap"
+import { IoIosCloseCircleOutline, IoIosAddCircleOutline } from "react-icons/io"
 
 import {
-  Paragraph,
   ParagraphInputModel,
-} from "../../../store/types/paragraphTypes";
-import { addParagraph } from "../../../store/actions/paragraphAction";
-import { RootState } from "../../../store/reducers/rootReducer";
-import { Tag, TagInputModel } from "../../../store/types/tagTypes";
-import { addTagAction } from "../../../store/actions/tagAction";
+} from "../../../store/types/paragraphTypes"
+import { addParagraph } from "../../../store/actions/paragraphAction"
+import { RootState } from "../../../store/reducers/rootReducer"
+import { Tag } from "../../../store/types/tagTypes"
+import AddTagToParagraphButton from "./AddTagToParagraphButton"
 
 interface ParagraphFormProps {
   onSubmit: Function
@@ -26,12 +25,11 @@ function ParagraphForm(props: ParagraphFormProps) {
 
   // tags that have been added
   const [addedTags, setAddedTags] = useState([])
-  // if user is adding tag
+  // if user is creating a tag
   const [addingTag, setAddingTag] = useState(false)
-  // text of adding tag
-  const [tagText, setTagText] = useState("")
 
   const [filteredTags, setFilteredTags] = useState([])
+  // search tag text 
   const [searchText, setSearchText] = useState("")
 
   useEffect(() => {
@@ -45,10 +43,6 @@ function ParagraphForm(props: ParagraphFormProps) {
 
   const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setNote(event.currentTarget.value)
-  };
-
-  const handleTagTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTagText(event.currentTarget.value)
   };
 
   const handleSearchTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,20 +74,6 @@ function ParagraphForm(props: ParagraphFormProps) {
         return t.id != tag.id
       })
     )
-  }
-
-  /* form submission */
-  const onTagFormSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (tagText == "") {
-      return
-    }
-    var tagInput: TagInputModel = {
-      name: tagText,
-    }
-    dispatch(addTagAction(tagInput))
-    setAddingTag(false)
-    setTagText("")
   }
 
   const submitParagraphForm = () => {
@@ -180,16 +160,7 @@ function ParagraphForm(props: ParagraphFormProps) {
         )}
         {/* add new tag */}
         {addingTag ? (
-          <form onSubmit={(e) => onTagFormSubmit(e)} className="d-inline-block">
-            <Button
-              as="input"
-              onChange={handleTagTextChange}
-              autoFocus
-              type="submit"
-              variant="success"
-              className="mb-2"
-            />
-          </form>
+          <AddTagToParagraphButton onSubmit={() => setAddingTag(false)} />
         ) : (
             <Button
               variant="success"
@@ -207,7 +178,7 @@ function ParagraphForm(props: ParagraphFormProps) {
         Submit
       </Button>
     </React.Fragment>
-  );
+  )
 }
 
-export default ParagraphForm;
+export default ParagraphForm

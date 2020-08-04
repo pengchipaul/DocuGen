@@ -3,7 +3,9 @@ import { Action } from "redux"
 import axios from "axios"
 
 import { RootState } from "../reducers/rootReducer"
-import { GET_PARAGRAPHS, ADD_PARAGRAPH, UPDATE_PARAGRAPH, ParagraphInputModel } from "../types/paragraphTypes"
+import { GET_PARAGRAPHS, ADD_PARAGRAPH, UPDATE_PARAGRAPH, ParagraphInputModel,
+ADD_TAG_TO_PARAGRAPH, REMOVE_TAG_FROM_PARAGRAPH
+} from "../types/paragraphTypes"
 
 export const getParagraphs = (): ThunkAction<void, RootState, unknown, Action<String>> => {
   return (dispatch, getState) => {
@@ -56,6 +58,50 @@ export const updateParagraph = (paragraphInputModel: ParagraphInputModel): Thunk
         if (res.status === 200) {
           dispatch({
             type: UPDATE_PARAGRAPH,
+            payload: res.data.data
+          })
+        } else {
+          throw new Error()
+        }
+      })
+      .catch(function (err) {
+
+      })
+      .finally(function () {
+
+      })
+  }
+}
+
+export const addTagToParagraph = (paragraphId: BigInt, tagId: BigInt): ThunkAction<void, RootState, unknown, Action<String>> => {
+  return (dispatch, getState) => {
+    axios.post("/web_api/paragraphs/add_tag", {paragraphId, tagId})
+      .then(function (res) {
+        if (res.status === 200) {
+          dispatch({
+            type: ADD_TAG_TO_PARAGRAPH, 
+            payload: res.data.data
+          })
+        } else {
+          throw new Error()
+        }
+      })
+      .catch(function (err) {
+
+      })
+      .finally(function () {
+
+      })
+  }
+}
+
+export const removeTagFromParagraph = (paragraphId: BigInt, tagId: BigInt): ThunkAction<void, RootState, unknown, Action<String>> => {
+  return (dispatch, getState) => {
+    axios.post("/web_api/paragraphs/remove_tag", {paragraphId: paragraphId, tagId: tagId})
+      .then(function (res) {
+        if (res.status === 200) {
+          dispatch({
+            type: REMOVE_TAG_FROM_PARAGRAPH, 
             payload: res.data.data
           })
         } else {

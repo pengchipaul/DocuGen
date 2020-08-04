@@ -41,7 +41,7 @@ Route::namespace('User')->prefix('web_api')->middleware('auth')->group(function 
         Route::post('store', 'ParagraphController@store');
         Route::patch('update', 'ParagraphController@update');
         Route::post('add_tag', 'ParagraphController@addTagToParagraph');
-        Route::delete('remove_tag', 'ParagraphController@removeTagFromParagraph');
+        Route::post('remove_tag', 'ParagraphController@removeTagFromParagraph');
     });
 
     /* tags */

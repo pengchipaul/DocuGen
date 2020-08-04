@@ -34,12 +34,14 @@ class ParagraphRepository extends Controller
     public function addTag($paragraphId, $tagId) {
         $paragraph = Paragraph::find($paragraphId);
         $paragraph->tags()->attach($tagId);
+        $paragraph = Paragraph::with("tags")->find($paragraphId);
         return $paragraph;
     }
 
     public function removeTag($paragraphId, $tagId){
         $paragraph = Paragraph::find($paragraphId);
         $paragraph->tags()->detach($tagId);
+        $paragraph = Paragraph::with("tags")->find($paragraphId);
         return $paragraph;
     }
 }

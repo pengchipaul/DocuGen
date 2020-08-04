@@ -43,5 +43,19 @@ interface UpdateParagraphAction {
     payload: Paragraph
 }
 
+export const ADD_TAG_TO_PARAGRAPH = "ADD_TAG_TO_PARAGRAPH"
+
+interface AddTagToParagraph {
+    type: typeof ADD_TAG_TO_PARAGRAPH,
+    payload: Paragraph
+}
+
+export const REMOVE_TAG_FROM_PARAGRAPH = "REMOVE_TAG_FROM_PARAGRAPH"
+
+interface RemoveTagFromParagraph {
+    type: typeof REMOVE_TAG_FROM_PARAGRAPH,
+    payload: Paragraph
+}
+
 export type ParagraphActionTypes = GetParagraphsAction | AddParagraphAction
-    | UpdateParagraphAction
+    | UpdateParagraphAction | AddTagToParagraph | RemoveTagFromParagraph

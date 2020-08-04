@@ -24,11 +24,13 @@ class ParagraphTagSeeder extends Seeder
             "note" => "This is testing paragraph 1",
             "user_id" => $user->id
         ]);
+        sleep(1);
         $p2 = Paragraph::create([
             "content" => Str::random(100),
             "note" => "This is testing paragraph 2",
             "user_id" => $user->id
         ]);
+        sleep(1);
         $p3 = Paragraph::create([
             "content" => Str::random(100),
             "user_id" => $user->id
@@ -42,9 +44,13 @@ class ParagraphTagSeeder extends Seeder
             "name" => "education background",
             "user_id" => $user->id
         ]);
+        $t3 = Tag::create([
+            "name" => "Student Visa",
+            "user_id" => $user->id
+        ]);
 
         $p1->tags()->attach($t1->id);
-        $p2->tags()->attach($t2->id);
-        $p3->tags()->attach([$t1->id, $t2->id]);
+        $p2->tags()->attach([$t1->id, $t2->id]);
+        $p3->tags()->attach([$t1->id, $t2->id, $t3->id]);
     }
 }

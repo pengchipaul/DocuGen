@@ -43,6 +43,13 @@ interface UpdateParagraphAction {
     payload: Paragraph
 }
 
+export const DELETE_PARAGRAPH = "DELETE_PARAGRAPH"
+
+interface DeleteParagraphAction {
+    type: typeof DELETE_PARAGRAPH,
+    payload: BigInt
+}
+
 export const ADD_TAG_TO_PARAGRAPH = "ADD_TAG_TO_PARAGRAPH"
 
 interface AddTagToParagraph {
@@ -58,4 +65,5 @@ interface RemoveTagFromParagraph {
 }
 
 export type ParagraphActionTypes = GetParagraphsAction | AddParagraphAction
-    | UpdateParagraphAction | AddTagToParagraph | RemoveTagFromParagraph
+    | UpdateParagraphAction | DeleteParagraphAction | AddTagToParagraph 
+    | RemoveTagFromParagraph

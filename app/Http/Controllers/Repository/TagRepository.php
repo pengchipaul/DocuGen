@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Repository;
 
 use App\Http\Controllers\Controller;
+use App\ParagraphTag;
 use Illuminate\Http\Request;
 
 use App\Tag;
@@ -23,5 +24,11 @@ class TagRepository extends Controller
         $tag = Tag::create($data);
         $tag["paragraphs"] = [];
         return $tag;
+    }
+
+    public function delete($tagId) {
+        ParagraphTag::where('tag_id', $tagId)->delete();
+        Tag::find($tagId)->delete();
+        return;
     }
 }

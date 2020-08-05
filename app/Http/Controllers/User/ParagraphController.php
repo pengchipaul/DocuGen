@@ -58,6 +58,19 @@ class ParagraphController extends Controller
         }
     }
 
+    public function delete(Request $req) {
+        if(!$this->validateEditAccess($req))
+            return $this->sendInvalidResponse("delete paragraph");
+        
+        try {
+            $this->repo->delete($req->id);
+            return response()->json(["message" => "success"], 200);
+        } catch(\Exception $e) {
+            Log::error($e);
+            return response()->json(["message" => "server error"], 500);
+        }
+    }
+
     public function addTagToParagraph(Request $req){
         if(!$this->validateModifyTags($req))
             return $this->sendInvalidResponse("add tag to paragraph");

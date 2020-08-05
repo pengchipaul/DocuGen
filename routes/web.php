@@ -40,6 +40,7 @@ Route::namespace('User')->prefix('web_api')->middleware('auth')->group(function 
         Route::get('all', 'ParagraphController@index');
         Route::post('store', 'ParagraphController@store');
         Route::patch('update', 'ParagraphController@update');
+        Route::delete('delete', 'ParagraphController@delete');
         Route::post('add_tag', 'ParagraphController@addTagToParagraph');
         Route::post('remove_tag', 'ParagraphController@removeTagFromParagraph');
     });

@@ -5,7 +5,7 @@ import { BsXCircle, BsPlusCircle } from "react-icons/bs"
 
 import { RootState } from "../../../store/reducers/rootReducer"
 import { Paragraph, ParagraphInputModel } from '../../../store/types/paragraphTypes'
-import { updateParagraph, addTagToParagraph, removeTagFromParagraph } from '../../../store/actions/paragraphAction'
+import { updateParagraph, deleteParagraph, addTagToParagraph, removeTagFromParagraph } from '../../../store/actions/paragraphAction'
 import CopyToClipboard from '../../../helper/CopyToClipboard'
 import { Tag } from '../../../store/types/tagTypes'
 import AddTagToParagraphButton from "./AddTagToParagraphButton"
@@ -235,7 +235,7 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => setEditContent(true)} >Edit Content</Dropdown.Item>
                   <Dropdown.Item onClick={() => setEditTag(true)} >Edit Tags</Dropdown.Item>
-                  <Dropdown.Item className="text-danger">Delete</Dropdown.Item>
+                  <Dropdown.Item onClick={() => dispatch(deleteParagraph(paragraph.id))} className="text-danger">Delete</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
               <Button ref={target} onClick={() => copyToClipboard(paragraph.content)}>Copy</Button>

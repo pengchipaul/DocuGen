@@ -15,7 +15,7 @@ class Controller extends BaseController
 
     public function sendInvalidResponse($action) {
         Log::alert("User: ".Auth::user()->email.", action:".$action);
-        return response()->json(["message" => "invalid request"], 403);
+        return response()->json(["message" => "invalid request"], 400);
     }
 
 }

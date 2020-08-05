@@ -27,8 +27,13 @@ class ParagraphRepository extends Controller
     public function update($paragraphId, $data){
         Paragraph::find($paragraphId)->update($data);
         $paragraph = Paragraph::with("tags")->find($paragraphId);
-        return $paragraph;
-        
+        return $paragraph;     
+    }
+
+    public function delete($paragraphId) {
+        ParagraphTag::where('paragraph_id', $paragraphId)->delete();
+        Paragraph::find($paragraphId)->delete();
+        return;
     }
 
     public function addTag($paragraphId, $tagId) {

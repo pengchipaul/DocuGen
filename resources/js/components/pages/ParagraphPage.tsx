@@ -8,7 +8,7 @@ import ParagraphItem from '../widgets/paragraph/ParagraphItem'
 import PargraphToolBar from '../widgets/paragraph/PargraphToolBar'
 import { RootState } from '../../store/reducers/rootReducer'
 import { ParagraphState } from '../../store/types/paragraphTypes'
-import { SortParagraphsByDate } from '../../helper/SortHelper'
+import { SortParagraphsByDate } from '../../helper/ParagraphHelper'
 
 
 function ParagraphPage(props: RouteComponentProps) {
@@ -23,18 +23,18 @@ function ParagraphPage(props: RouteComponentProps) {
   return (
     <Container fluid>
       <Row>
-        <Col>
+        <Col sm="11">
           {paragraphState.data.length > 0 &&
             <Row>
-              {SortParagraphsByDate(paragraphState.data).map((p) =>
-                <Col sm="6" key={p.id.toString()} className="mb-5">
+              {paragraphState.data.map((p) =>
+                <Col md="6" key={p.id.toString()} className="mb-5">
                   <ParagraphItem paragraph={p} />
                 </Col>
               )}
             </Row>
           }
         </Col>
-        <Col md="auto">
+        <Col sm="1">
           <PargraphToolBar />
         </Col>
       </Row>

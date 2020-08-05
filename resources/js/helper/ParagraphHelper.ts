@@ -13,3 +13,15 @@ function compareDate(date1: Date, date2: Date){
         return 1;
     }
 }
+
+export function ReplaceParagraphInArray(array: Paragraph[], p: Paragraph) {
+    
+    var index;
+    for(var i = 0; i < array.length; i++) {
+        if(array[i].id == p.id){
+            index = i;
+            break
+        }
+    }
+    array.splice(index, 1, p)
+}

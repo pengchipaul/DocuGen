@@ -19,23 +19,6 @@ class ParagraphTagSeeder extends Seeder
     {
         $user = User::where("email", "pengchipaul@gmail.com")->first();
 
-        $p1 = Paragraph::create([
-            "content" => Str::random(100),
-            "note" => "This is testing paragraph 1",
-            "user_id" => $user->id
-        ]);
-        sleep(1);
-        $p2 = Paragraph::create([
-            "content" => Str::random(100),
-            "note" => "This is testing paragraph 2",
-            "user_id" => $user->id
-        ]);
-        sleep(1);
-        $p3 = Paragraph::create([
-            "content" => Str::random(100),
-            "user_id" => $user->id
-        ]);
-
         $t1 = Tag::create([
             "name" => "financial support",
             "user_id" => $user->id
@@ -49,8 +32,23 @@ class ParagraphTagSeeder extends Seeder
             "user_id" => $user->id
         ]);
 
-        $p1->tags()->attach($t1->id);
-        $p2->tags()->attach([$t1->id, $t2->id]);
-        $p3->tags()->attach([$t1->id, $t2->id, $t3->id]);
+        $tags = [$t1, $t2, $t3];
+
+        $sampleSize = 5;
+
+        for($i = 0; $i < $sampleSize; $i++){
+            $p = Paragraph::create([
+                "content" => Str::random(rand(100, 500)),
+                "note" => Str::random(rand(0, 50)),
+                "user_id" => $user->id
+            ]);
+            sleep(1);
+
+            $numTags = rand(0, 3);
+            for($j = 0; $j < $numTags; $j++){
+                $p->tags()->attach($tags[$j]->id);
+            }
+        }
+
     }
 }

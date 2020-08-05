@@ -115,7 +115,7 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
       <Card.Header>
         {/* paragraph's tags */}
         {editTag == false && paragraph.tags.length > 0 && paragraph.tags.map((t) =>
-          <Button variant="outline-danger" key={t.id.toString()} className="mr-2">
+          <Button variant="outline-danger" key={t.id.toString()} className="mr-2 mb-2">
             {t.name}
           </Button>
         )}
@@ -123,7 +123,7 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
 
         {/* remove tags */}
         {editTag == true && paragraph.tags.map((t) => 
-          <ButtonGroup key={t.id.toString()} className="mr-2">
+          <ButtonGroup key={t.id.toString()} className="mr-2 mb-2">
             <Button variant="outline-danger">{t.name}</Button>
             <Button variant="danger" onClick={() => removeTag(t.id)}><BsXCircle /></Button>
           </ButtonGroup>
@@ -142,9 +142,10 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
                 key={tag.id.toString()}
                 variant="success"
                 className="mr-2 mb-2"
+                onClick={() => addTagToParagraphOnClick(tag.id)} 
               >
                 {tag.name}
-                <BsPlusCircle onClick={() => addTagToParagraphOnClick(tag.id)} className="ml-2" />
+                <BsPlusCircle className="ml-2" />
               </Button>
             )}
             {/* create new tag */}
@@ -213,9 +214,14 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
           }
 
           {/* exit edit mode button */}
-          {(editContent == true || editTag == true) &&
+          {editContent == true  &&
             <Button variant="light" onClick={() => cancelUpdate()}>
               Cancel
+            </Button>
+          }
+          {editTag == true  &&
+            <Button variant="light" onClick={() => cancelUpdate()}>
+              Exit
             </Button>
           }
 

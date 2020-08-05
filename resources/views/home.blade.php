@@ -13,8 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
                     You are logged in!
+                    <br>
+                    Source code: <a href="https://github.com/pengchipaul/DocuGen">https://github.com/pengchipaul/DocuGen</a>
                 </div>
             </div>
         </div>

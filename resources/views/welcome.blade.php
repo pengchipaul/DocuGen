@@ -87,6 +87,7 @@
                 <div id="description">
                     <p>Generate and manage your paragraphs with variables and generate an article with these paragraphs by just filling necessary variables</p>
                     <div>
+                        <p>check <a href="https://github.com/pengchipaul/DocuGen">source code</a></p>
                         <p>Developed by Paul Peng</p>
                     </div>
                 </div>

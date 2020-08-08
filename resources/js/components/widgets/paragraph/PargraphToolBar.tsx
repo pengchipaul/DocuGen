@@ -16,7 +16,7 @@ function ParagraphToolBar() {
   }
 
   return (
-    <React.Fragment>
+    <div className="float-right">
       <Button block variant="primary" onClick={showForm} >
         <h3>
           <IoIosAddCircle size="1.5em" />
@@ -35,7 +35,7 @@ function ParagraphToolBar() {
         </h3>
         Search
       </Button>
-    </React.Fragment>
+    </div>
   )
 }
 

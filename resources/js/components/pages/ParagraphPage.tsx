@@ -1,15 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
-import { Container, Row, Col, Button } from 'react-bootstrap'
-import { IoIosAddCircle, IoIosSearch } from 'react-icons/io'
+import { Container, Row, Col } from 'react-bootstrap'
 
 import ParagraphItem from '../widgets/paragraph/ParagraphItem'
 import PargraphToolBar from '../widgets/paragraph/PargraphToolBar'
 import { RootState } from '../../store/reducers/rootReducer'
 import { ParagraphState } from '../../store/types/paragraphTypes'
-import { SortParagraphsByDate } from '../../helper/ParagraphHelper'
-
+import ParagraphFilter from "../widgets/paragraph/ParagraphFilter"
 
 function ParagraphPage(props: RouteComponentProps) {
   const paragraphState: ParagraphState = useSelector(
@@ -20,15 +18,25 @@ function ParagraphPage(props: RouteComponentProps) {
     localStorage.setItem("url", props.history.location.pathname);
   }, [])
 
+
+  const [filter, setFilter] = useState({
+    paragraphs: []
+  })
+
+  const [colNum, setColNum] = useState(2)
+  
   return (
     <Container fluid>
       <Row>
         <Col sm="11">
-          {paragraphState.data.length > 0 &&
+          <Row className="mb-3">
+            <ParagraphFilter  setColNum={setColNum} setParagraphs={setFilter} />
+          </Row>
+          {filter.paragraphs.length > 0 &&
             <Row>
-              {paragraphState.data.map((p) =>
-                <Col md="6" key={p.id.toString()} className="mb-5">
-                  <ParagraphItem paragraph={p} />
+              {filter.paragraphs.map((p) =>
+                <Col md={12/colNum} key={p.id.toString()} className="mb-3">
+                  <ParagraphItem width={colNum} paragraph={p} />
                 </Col>
               )}
             </Row>

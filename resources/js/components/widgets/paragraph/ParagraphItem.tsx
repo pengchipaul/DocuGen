@@ -12,9 +12,10 @@ import AddTagToParagraphButton from "./AddTagToParagraphButton"
 
 interface ParagraphItemProps {
   paragraph: Paragraph
+  width: number
 }
 
-function ParagraphItem({ paragraph }: ParagraphItemProps) {
+function ParagraphItem(props: ParagraphItemProps) {
 
   function copyToClipboard(str: string) {
     CopyToClipboard(str)
@@ -27,27 +28,65 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
   const dispatch = useDispatch()
   const tagState = useSelector((state: RootState) => state.tag)
 
+
+  const paragraphId = "paragraph-" + props.paragraph.id
   /* for updating paragraph and tags */
   const [editContent, setEditContent] = useState(false)
   const [editTag, setEditTag] = useState(false)
-  const [content, setContent] = useState(paragraph.content)
-  const [note, setNote] = useState(paragraph.note)
+  const [content, setContent] = useState(props.paragraph.content)
+  const [note, setNote] = useState(props.paragraph.note)
   // search tag text 
   const [searchText, setSearchText] = useState("")
   // tags after search
   const [filteredTags, setFilteredTags] = useState([])
   // if user is creating a tag
   const [addingTag, setAddingTag] = useState(false)
-
+  // show 'copied' tooltip
   const [show, setShow] = useState(false)
   const target = useRef(null)
+  // height limit
+  const heightLimit = 200
+  const [hide, setHide] = useState(false)
+  const switchHide = () => {
+    if(hide) {
+      setHide(false)
+    } else {
+      setHide(true)
+    }
+  }
+  /* Show/Hide excessive content of paragraph
+   * set everything to inital value to determine if "show more/less" needs to be displayed
+   */
+  const [init, setInit] = useState(false)
+  const [showHide, setShowHide] = useState(false)
+  // reset to default values when col num changed
+  useEffect(() => {
+    setShowHide(false)
+    setHide(false)
+    setInit(false)
+  }, [props.width])
+  useEffect(() => {
+    if(!init) {
+      dispalyButton()
+    }
+  }, [init])
+  const dispalyButton = () => {
+    if(document.getElementById(paragraphId).clientHeight > heightLimit){
+      setShowHide(true)
+    } else {
+      setShowHide(false)
+    }
+    setHide(true)
+    setInit(true)
+  }
 
   useEffect(() => {
     filterTags(searchText)
-  }, [tagState, paragraph])
+  }, [tagState, props.paragraph])
 
   const handleContentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setContent(event.currentTarget.value)
+    event.currentTarget.style.height = event.currentTarget.scrollHeight + "px"
   }
 
   const handleNoteChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,7 +101,7 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
 
   const filterTags = (text: string) => {
     var tagIds: BigInt[] = []
-    paragraph.tags.forEach((tag) => {
+    props.paragraph.tags.forEach((tag) => {
       tagIds.push(tag.id)
     })
     var tags = tagState.data.filter((t) => {
@@ -82,9 +121,9 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
 
   const updateParagraphOnClick = () => {
     /* update only when there are changes */
-    if(content != paragraph.content || note != paragraph.note){
+    if(content != props.paragraph.content || note != props.paragraph.note){
       var paragraphInputModel: ParagraphInputModel = {
-        id: paragraph.id,
+        id: props.paragraph.id,
         content: content,
         note: note,
         tagIds: []
@@ -96,33 +135,33 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
   }
 
   const removeTag = (tagId: BigInt) => {
-    dispatch(removeTagFromParagraph(paragraph.id, tagId))
+    dispatch(removeTagFromParagraph(props.paragraph.id, tagId))
   }
 
   const cancelUpdate = () => {
-    setContent(paragraph.content)
-    setNote(paragraph.note)
+    setContent(props.paragraph.content)
+    setNote(props.paragraph.note)
     setEditContent(false)
     setEditTag(false)
   }
 
   const addTagToParagraphOnClick = (tagId: BigInt) => {
-    dispatch(addTagToParagraph(paragraph.id, tagId))
+    dispatch(addTagToParagraph(props.paragraph.id, tagId))
   }
 
   return (
     <Card>
       <Card.Header>
         {/* paragraph's tags */}
-        {editTag == false && paragraph.tags.length > 0 && paragraph.tags.map((t) =>
+        {editTag == false && props.paragraph.tags.length > 0 && props.paragraph.tags.map((t) =>
           <Button variant="outline-danger" key={t.id.toString()} className="mr-2 mb-2">
             {t.name}
           </Button>
         )}
-        {editTag == false && paragraph.tags.length == 0 && <Button variant="outline-secondary">No tags</Button>}
+        {editTag == false && props.paragraph.tags.length == 0 && <Button variant="outline-secondary" className="mb-2">No tags</Button>}
 
         {/* remove tags */}
-        {editTag == true && paragraph.tags.map((t) => 
+        {editTag == true && props.paragraph.tags.map((t) => 
           <ButtonGroup key={t.id.toString()} className="mr-2 mb-2">
             <Button variant="outline-danger">{t.name}</Button>
             <Button variant="danger" onClick={() => removeTag(t.id)}><BsXCircle /></Button>
@@ -170,21 +209,39 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
         <Container fluid className="mb-2">
           {/* paragraph body */}
           <Row>
-            <Col>
-            {editContent == false && paragraph.content}
+            <Col id={paragraphId} style={{height: !hide ? "auto" : heightLimit, 
+              overflow: hide ? "hidden" : "auto"}}>
+            {editContent == false && props.paragraph.content}
+          
             {editContent == true &&
               <Form.Control
                 as="textarea"
-                rows={3}
+                autoFocus
                 value={content}
                 onChange={handleContentChange}
+                rows={5}
               />
             }
             </Col>
           </Row>
+          <Row>
+            <Col>
+              <div style={{height: 40, position: "relative"}}>
+                {editContent == false && showHide &&
+                  <div style={{position: "absolute", bottom: 0, left: 0}}>
+                    <Button variant="light" className="p-0 align-bottom"
+                      onClick={switchHide}>
+                      {hide && <u>show more</u>}
+                      {!hide && <u>show less</u>}
+                    </Button>
+                  </div>
+                  }
+              </div>
+            </Col>
+          </Row>
         </Container>
 
-          <hr className="mt-5 mb-1"/>
+        <hr className="mt-5 mb-1"/>
 
         <Container fluid>
           {/* paragraph note */}
@@ -199,7 +256,11 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
                 />
               </Col>
             }
-            {(editContent == false && paragraph.note) && <Col className="m-auto"><small>{paragraph.note}</small></Col>}
+            {(editContent == false && props.paragraph.note) && 
+              <Col className="m-auto">
+                <small>{props.paragraph.note}</small>
+              </Col>
+            }
           </Form.Group>
 
         </Container>
@@ -229,18 +290,18 @@ function ParagraphItem({ paragraph }: ParagraphItemProps) {
           {editContent == false && editTag == false &&
             <React.Fragment>
               <Dropdown className="d-inline-block mr-1">
-                <Dropdown.Toggle variant="success" id={"dropdown-p-" + paragraph.id.toLocaleString()}>
+                <Dropdown.Toggle variant="success" id={"dropdown-p-" + props.paragraph.id.toLocaleString()}>
                   Actions
             </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={() => setEditContent(true)} >Edit Content</Dropdown.Item>
                   <Dropdown.Item onClick={() => setEditTag(true)} >Edit Tags</Dropdown.Item>
-                  <Dropdown.Item onClick={() => dispatch(deleteParagraph(paragraph.id))} className="text-danger">Delete</Dropdown.Item>
+                  <Dropdown.Item onClick={() => dispatch(deleteParagraph(props.paragraph.id))} className="text-danger">Delete</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Button ref={target} onClick={() => copyToClipboard(paragraph.content)}>Copy</Button>
+              <Button ref={target} onClick={() => copyToClipboard(props.paragraph.content)}>Copy</Button>
               <Overlay target={target.current} show={show} placement="top">
-                <Tooltip id={"tooltip-p" + paragraph.id.toString()}>
+                <Tooltip id={"tooltip-p" + props.paragraph.id.toString()}>
                   Copied!
                 </Tooltip>
               </Overlay>

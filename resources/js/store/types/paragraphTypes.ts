@@ -3,7 +3,8 @@ export interface Paragraph {
     content: string,
     note: string,
     tags: ParagraphTag[],
-    updated_at: Date
+    updated_at: Date,
+    created_at: Date
 }
 
 interface ParagraphTag {

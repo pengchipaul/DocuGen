@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
-import { IoIosAddCircle, IoIosSearch } from 'react-icons/io'
+import { IoIosAddCircle, IoIosSearch, IoIosPricetags } from 'react-icons/io'
 
 import ParagraphForm from './ParagraphForm';
 
@@ -34,6 +34,12 @@ function ParagraphToolBar() {
           <IoIosSearch size="1.5em" />
         </h3>
         Search
+      </Button>
+      <Button block variant="primary">
+        <h3>
+          <IoIosPricetags size="1.5em" />
+        </h3>
+        Tags
       </Button>
     </div>
   )

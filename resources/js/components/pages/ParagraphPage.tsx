@@ -1,18 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector } from 'react-redux'
 import { withRouter, RouteComponentProps } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 
-import ParagraphItem from '../widgets/paragraph/ParagraphItem'
-import PargraphToolBar from '../widgets/paragraph/PargraphToolBar'
-import { RootState } from '../../store/reducers/rootReducer'
-import { ParagraphState } from '../../store/types/paragraphTypes'
+import ParagraphItem from "../widgets/paragraph/ParagraphItem"
+import PargraphToolBar from "../widgets/paragraph/PargraphToolBar"
 import ParagraphFilter from "../widgets/paragraph/ParagraphFilter"
+import PaginationHelper from "../widgets/common/PaginationHelper"
 
 function ParagraphPage(props: RouteComponentProps) {
-  const paragraphState: ParagraphState = useSelector(
-    (state: RootState) => state.paragraphs
-  )
 
   useEffect(() => {
     localStorage.setItem("url", props.history.location.pathname);
@@ -20,25 +15,38 @@ function ParagraphPage(props: RouteComponentProps) {
 
 
   const [filter, setFilter] = useState({
-    paragraphs: []
+    data: []
+  })
+
+  const [pagedData, setPagedData] = useState({
+    data: []
   })
 
   const [colNum, setColNum] = useState(2)
-  
+
+  const rowNumber = 2
+
   return (
     <Container fluid>
       <Row>
         <Col sm="11">
           <Row className="mb-3">
-            <ParagraphFilter  setColNum={setColNum} setParagraphs={setFilter} />
+            <ParagraphFilter setColNum={setColNum} setParagraphs={setFilter} />
           </Row>
-          {filter.paragraphs.length > 0 &&
+          {pagedData.data.length > 0 &&
             <Row>
-              {filter.paragraphs.map((p) =>
-                <Col md={12/colNum} key={p.id.toString()} className="mb-3">
+              {pagedData.data.map((p) =>
+                <Col md={12 / colNum} key={p.id.toString()} className="mb-2 px-1">
                   <ParagraphItem width={colNum} paragraph={p} />
                 </Col>
               )}
+            </Row>
+          }
+
+          {/* pagination */}
+          {filter.data.length > colNum * rowNumber &&
+            <Row className="mt-2">
+              <PaginationHelper pageSize={colNum * rowNumber} data={filter.data} setData={setPagedData} />
             </Row>
           }
         </Col>

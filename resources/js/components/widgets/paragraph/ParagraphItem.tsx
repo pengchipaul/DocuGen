@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { InputGroup, FormControl, Card, Button, Overlay, Tooltip, Dropdown, Form, Col, Row, Container, ButtonGroup } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { BsXCircle, BsPlusCircle } from "react-icons/bs"
+import moment = require("moment")
 
 import { RootState } from "../../../store/reducers/rootReducer"
 import { Paragraph, ParagraphInputModel } from '../../../store/types/paragraphTypes'
@@ -35,7 +36,7 @@ function ParagraphItem(props: ParagraphItemProps) {
   const [editTag, setEditTag] = useState(false)
   const [content, setContent] = useState(props.paragraph.content)
   const [note, setNote] = useState(props.paragraph.note)
-  // search tag text 
+  // search tag text
   const [searchText, setSearchText] = useState("")
   // tags after search
   const [filteredTags, setFilteredTags] = useState([])
@@ -45,7 +46,7 @@ function ParagraphItem(props: ParagraphItemProps) {
   const [show, setShow] = useState(false)
   const target = useRef(null)
   // height limit
-  const heightLimit = 200
+  const heightLimit = 150
   const [hide, setHide] = useState(false)
   const switchHide = () => {
     if(hide) {
@@ -153,16 +154,21 @@ function ParagraphItem(props: ParagraphItemProps) {
     <Card>
       <Card.Header>
         {/* paragraph's tags */}
-        {editTag == false && props.paragraph.tags.length > 0 && props.paragraph.tags.map((t) =>
-          <Button variant="outline-danger" key={t.id.toString()} className="mr-2 mb-2">
-            {t.name}
-          </Button>
+        {editTag == false && props.paragraph.tags.length > 0 &&
+          props.paragraph.tags.map((t) =>
+            <Button size="sm" variant="outline-danger" key={t.id.toString()} className="mr-2 mb-1">
+              {t.name}
+            </Button>
         )}
-        {editTag == false && props.paragraph.tags.length == 0 && <Button variant="outline-secondary" className="mb-2">No tags</Button>}
+        {editTag == false && props.paragraph.tags.length == 0 &&
+            <Button size="sm" variant="outline-secondary" className="mb-2">
+              No tags
+            </Button>
+        }
 
         {/* remove tags */}
-        {editTag == true && props.paragraph.tags.map((t) => 
-          <ButtonGroup key={t.id.toString()} className="mr-2 mb-2">
+        {editTag == true && props.paragraph.tags.map((t) =>
+          <ButtonGroup key={t.id.toString()} className="mr-2 mb-1">
             <Button variant="outline-danger">{t.name}</Button>
             <Button variant="danger" onClick={() => removeTag(t.id)}><BsXCircle /></Button>
           </ButtonGroup>
@@ -170,18 +176,18 @@ function ParagraphItem(props: ParagraphItemProps) {
         {editTag == true && <hr />}
 
         {/* add tags */}
-        {editTag == true && 
+        {editTag == true &&
           <Form.Group>
             <Form.Label className="mr-2">All tags: </Form.Label>
             <InputGroup className="mb-2">
               <FormControl type="text" placeholder="Search" onChange={handleSearchTextChange} />
             </InputGroup>
-            {filteredTags.map((tag: Tag) => 
+            {filteredTags.map((tag: Tag) =>
               <Button
                 key={tag.id.toString()}
                 variant="success"
                 className="mr-2 mb-2"
-                onClick={() => addTagToParagraphOnClick(tag.id)} 
+                onClick={() => addTagToParagraphOnClick(tag.id)}
               >
                 {tag.name}
                 <BsPlusCircle className="ml-2" />
@@ -209,10 +215,10 @@ function ParagraphItem(props: ParagraphItemProps) {
         <Container fluid className="mb-2">
           {/* paragraph body */}
           <Row>
-            <Col id={paragraphId} style={{height: !hide ? "auto" : heightLimit, 
+            <Col id={paragraphId} style={{height: !hide ? "auto" : heightLimit,
               overflow: hide ? "hidden" : "auto"}}>
             {editContent == false && props.paragraph.content}
-          
+
             {editContent == true &&
               <Form.Control
                 as="textarea"
@@ -226,7 +232,7 @@ function ParagraphItem(props: ParagraphItemProps) {
           </Row>
           <Row>
             <Col>
-              <div style={{height: 40, position: "relative"}}>
+              <div style={{height: 30, position: "relative"}}>
                 {editContent == false && showHide &&
                   <div style={{position: "absolute", bottom: 0, left: 0}}>
                     <Button variant="light" className="p-0 align-bottom"
@@ -241,12 +247,12 @@ function ParagraphItem(props: ParagraphItemProps) {
           </Row>
         </Container>
 
-        <hr className="mt-5 mb-1"/>
+        <hr className="mt-2 mb-1"/>
 
         <Container fluid>
           {/* paragraph note */}
-          <Form.Group as={Row} className="mb-0">
-            <Form.Label column md="auto"><small>Note:</small></Form.Label>
+          <Row className="mb-0">
+            <Col md="auto"><small>Note:</small></Col>
             {editContent == true &&
               <Col>
                 <Form.Control
@@ -256,19 +262,31 @@ function ParagraphItem(props: ParagraphItemProps) {
                 />
               </Col>
             }
-            {(editContent == false && props.paragraph.note) && 
+            {(editContent == false && props.paragraph.note) &&
               <Col className="m-auto">
                 <small>{props.paragraph.note}</small>
               </Col>
             }
-          </Form.Group>
-
+          </Row>
+          {/* created and last updated date */}
+          <Row className="mb-0">
+              <Col md="auto"><small>Created at:</small></Col>
+              <Col className="m-auto">
+                <small>{moment(props.paragraph.created_at.toString()).format("dddd, MMMM Do YYYY, h:mm:ss a")}</small>
+              </Col>
+          </Row>
+          <Row className="mb-0">
+              <Col md="auto"><small>Updated at:</small></Col>
+              <Col className="m-auto">
+                <small>{moment(props.paragraph.updated_at.toString()).format("dddd, MMMM Do YYYY, h:mm:ss a")}</small>
+              </Col>
+          </Row>
         </Container>
       </Card.Body>
-      <Card.Footer>
+      <Card.Footer className="py-2">
         <div className="float-right">
           {/* update paragraph button */}
-          {editContent == true && 
+          {editContent == true &&
             <Button variant="primary" onClick={() => updateParagraphOnClick()}>
               Update
             </Button>
@@ -290,7 +308,7 @@ function ParagraphItem(props: ParagraphItemProps) {
           {editContent == false && editTag == false &&
             <React.Fragment>
               <Dropdown className="d-inline-block mr-1">
-                <Dropdown.Toggle variant="success" id={"dropdown-p-" + props.paragraph.id.toLocaleString()}>
+                <Dropdown.Toggle size="sm" variant="success" id={"dropdown-p-" + props.paragraph.id.toLocaleString()}>
                   Actions
             </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -299,7 +317,7 @@ function ParagraphItem(props: ParagraphItemProps) {
                   <Dropdown.Item onClick={() => dispatch(deleteParagraph(props.paragraph.id))} className="text-danger">Delete</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Button ref={target} onClick={() => copyToClipboard(props.paragraph.content)}>Copy</Button>
+              <Button size="sm" ref={target} onClick={() => copyToClipboard(props.paragraph.content)}>Copy</Button>
               <Overlay target={target.current} show={show} placement="top">
                 <Tooltip id={"tooltip-p" + props.paragraph.id.toString()}>
                   Copied!

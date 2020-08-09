@@ -31,8 +31,7 @@ function ParagraphFilter(props: ParagraphFilterProps) {
 
   /* update columns  */
   const maxColNum = 4
-  const changeColNum = (event: React.ChangeEvent<HTMLInputElement>) => {
-    var num = parseInt(event.currentTarget.value)
+  const changeColNum = (num: number) => {
     if (num >= 1 && num <= maxColNum) {
       props.setColNum(num)
     }
@@ -151,7 +150,7 @@ function ParagraphFilter(props: ParagraphFilterProps) {
         <Col xs="auto" className="my-1 pr-1">
           <DropdownButton variant="Light" alignRight title="Columns" id="paragraph-columns">
             {Array.from({ length: maxColNum }, (_, index) => index + 1).map((index) =>
-              <Dropdown.Item key={index} onClick={() => props.setColNum(index)}>
+              <Dropdown.Item key={index} onClick={() => changeColNum(index)}>
                 {index} {index > 1 ? "Columns" : "Column"}
               </Dropdown.Item>
             )}

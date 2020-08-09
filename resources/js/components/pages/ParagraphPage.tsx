@@ -33,6 +33,7 @@ function ParagraphPage(props: RouteComponentProps) {
           <Row className="mb-3">
             <ParagraphFilter setColNum={setColNum} setParagraphs={setFilter} />
           </Row>
+          {/* display paragraphs on selected page */}
           {pagedData.data.length > 0 &&
             <Row>
               {pagedData.data.map((p) =>
@@ -44,11 +45,9 @@ function ParagraphPage(props: RouteComponentProps) {
           }
 
           {/* pagination */}
-          {filter.data.length > colNum * rowNumber &&
-            <Row className="mt-2">
-              <PaginationHelper pageSize={colNum * rowNumber} data={filter.data} setData={setPagedData} />
-            </Row>
-          }
+          <Row className="mt-2" style={{display: filter.data.length > colNum * rowNumber ? "block" : "none"}}>
+            <PaginationHelper pageSize={colNum * rowNumber} dataSource={filter} setData={setPagedData} />
+          </Row>
         </Col>
         <Col sm="1">
           <PargraphToolBar />

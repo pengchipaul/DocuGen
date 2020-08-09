@@ -34,7 +34,7 @@ class ParagraphTagSeeder extends Seeder
 
         $tags = [$t1, $t2, $t3];
 
-        $sampleSize = 5;
+        $sampleSize = 10;
 
         for($i = 0; $i < $sampleSize; $i++){
             $p = Paragraph::create([

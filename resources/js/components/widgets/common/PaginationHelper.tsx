@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react"
 import { Pagination, Container, Row, Col, Form, Button } from "react-bootstrap"
 
 interface PaginationHelperProps {
-  data: any[],
+  dataSource: {
+    data: any[]
+  },
   pageSize: number,
   setData: Function
 }
@@ -10,7 +12,7 @@ interface PaginationHelperProps {
 function PaginationHelper(props: PaginationHelperProps) {
 
   const [pageNum, setPageNum] = useState(1)
-  const lastPage = Math.ceil(props.data.length / props.pageSize)
+  const lastPage = Math.ceil(props.dataSource.data.length / props.pageSize)
   // state for goto page
   const [pageInput, setPageInput] = useState("")
   const handlePageInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,12 +32,18 @@ function PaginationHelper(props: PaginationHelperProps) {
   }
 
   useEffect(() => {
+    console.log("paging")
+    if(props.dataSource.data.length == 0){
+        props.setData({
+            data: []
+        })
+        return
+    }
     var indexStart = (pageNum - 1) * props.pageSize
-    console.log(props.data.slice(indexStart, indexStart + props.pageSize))
     props.setData({
-      data: props.data.slice(indexStart, indexStart + props.pageSize)
+      data: props.dataSource.data.slice(indexStart, indexStart + props.pageSize)
     })
-  }, [pageNum, props.data, props.pageSize])
+  }, [pageNum, props.dataSource, props.pageSize])
 
   const prevPage = () => {
     if (pageNum > 1) {

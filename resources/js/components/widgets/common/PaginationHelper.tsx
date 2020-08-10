@@ -32,7 +32,6 @@ function PaginationHelper(props: PaginationHelperProps) {
   }
 
   useEffect(() => {
-    console.log("paging")
     if(props.dataSource.data.length == 0){
         props.setData({
             data: []

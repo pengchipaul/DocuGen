@@ -31,12 +31,6 @@ function ParagraphToolBar() {
       </Modal>
       <Button block variant="primary">
         <h3>
-          <IoIosSearch size="1.5em" />
-        </h3>
-        Search
-      </Button>
-      <Button block variant="primary">
-        <h3>
           <IoIosPricetags size="1.5em" />
         </h3>
         Tags

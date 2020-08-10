@@ -52,3 +52,19 @@ export function ReplaceParagraphInArray(array: Paragraph[], p: Paragraph) {
   }
   array.splice(index, 1, p)
 }
+
+export function ParagraphHasTags(paragraph: Paragraph, tags: any[]): Boolean {
+  var paragraphTags: any[] = []
+  
+  paragraph.tags.forEach((t) => {
+    paragraphTags.push(t.id)
+  })
+
+  for(var i = 0; i < tags.length; i++){
+    if(!paragraphTags.includes(tags[i].value)){
+      return false
+    }
+  }
+
+  return true
+}

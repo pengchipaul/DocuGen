@@ -29,7 +29,7 @@ function App() {
       <Router>
         <Container fluid>
           <Row>
-            <Col xl={1} lg={2}>
+            <Col xl={1} lg={2} className="px-2">
               <NavBar />
             </Col>
             <Col xl={11} lg={10}>

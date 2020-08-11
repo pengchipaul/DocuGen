@@ -189,6 +189,16 @@ function ParagraphFilter(props: ParagraphFilterProps) {
               value={selectedTags}
               onChange={setSelectedTags}
               labelledBy={"selet-tags"}
+              filterOptions={
+                (options, filter) => {
+                  if(!filter) {
+                    return options
+                  }
+                  return options.filter(
+                    ({label}) => label.toUpperCase().includes(filter.toUpperCase())
+                  )
+                }
+              }
             />
           </Col>
         )}

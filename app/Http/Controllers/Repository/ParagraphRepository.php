@@ -15,6 +15,10 @@ class ParagraphRepository extends Controller
         return Paragraph::with('tags')->get();
     }
 
+    public function getByUserId($userId){
+        return Paragraph::with('tags')->where('user_id', $userId)->get();
+    }
+
     public function insert($data){
         $paragraph = Paragraph::create($data);
         if(array_key_exists("tagIds", $data)) {

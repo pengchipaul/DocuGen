@@ -22,7 +22,7 @@ class ParagraphController extends Controller
 
     public function index() {
         try {
-            $paragraphs =  $this->repo->index();
+            $paragraphs =  $this->repo->getByUserId(Auth::user()->id);
             return response()->json(["message" => "success", "data" => $paragraphs], 200);
         } catch (\Exception $e){
             Log::error($e);

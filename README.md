@@ -9,8 +9,8 @@ Live webiste: https://docugen.pengchipaul.com
 - [x] 1.project setup
 - [x] 2.paragraph and tag data model
 - [x] 3.database seeding
-- [ ] 4.paragraph and tag CRUD
-- [ ] 5.search paragraphs (by name, tag)
+- [x] 4.paragraph and tag CRUD
+- [x] 5.search paragraphs (by name, tag)
 - [ ] 6.template and section data model
 - [ ] 7.template and section CRUD
 - [ ] 8.section and paragraph CRUD

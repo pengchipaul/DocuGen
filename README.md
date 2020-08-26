@@ -17,7 +17,6 @@ Live webiste: https://docugen.pengchipaul.com
 - [ ] 9.generate document from template
 - [ ] 10.add variables in document generation
 - [ ] 11.styling and animation
-- [ ] 12.Frontend and backend validation 
 
 and etc
 

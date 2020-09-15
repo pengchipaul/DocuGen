@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { Nav } from 'react-bootstrap';
+import { Nav, Row } from 'react-bootstrap';
 
 function NavBar(props: RouteComponentProps) {
   const navigateTo = (link: string) => {
@@ -16,11 +16,13 @@ function NavBar(props: RouteComponentProps) {
 
   return (
     <div className="container">
+      <Row>
         <Nav className="flex-column">
           <Nav.Link onClick={() => navigateTo("")}>Home</Nav.Link>
           <Nav.Link onClick={() => navigateTo("/templates")}>Templates</Nav.Link>
           <Nav.Link onClick={() => navigateTo("/paragraphs")}>Paragraphs</Nav.Link>
         </Nav>
+      </Row>
     </div>
   );
 }

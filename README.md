@@ -9,15 +9,14 @@ Live webiste: https://docugen.pengchipaul.com
 - [x] 1.project setup
 - [x] 2.paragraph and tag data model
 - [x] 3.database seeding
-- [ ] 4.paragraph and tag CRUD
-- [ ] 5.search paragraphs (by name, tag)
+- [x] 4.paragraph and tag CRUD
+- [x] 5.search paragraphs (by name, tag)
 - [ ] 6.template and section data model
 - [ ] 7.template and section CRUD
 - [ ] 8.section and paragraph CRUD
 - [ ] 9.generate document from template
 - [ ] 10.add variables in document generation
 - [ ] 11.styling and animation
-- [ ] 12.Frontend and backend validation 
 
 and etc
 

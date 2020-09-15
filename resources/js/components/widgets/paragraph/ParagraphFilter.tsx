@@ -79,7 +79,7 @@ function ParagraphFilter(props: ParagraphFilterProps) {
     // filter by note
     if (searchNote != "") {
       paragraphs = paragraphs.filter((p: Paragraph) => {
-        return p.note.toUpperCase().includes(searchNote.toUpperCase());
+        return p.note != null && p.note.toUpperCase().includes(searchNote.toUpperCase());
       });
     }
 

@@ -31,7 +31,7 @@ class ParagraphController extends Controller
     }
 
     public function store(Request $req) {
-        if(!($this->validateParagraphContent($req) && $this->validateParagraphTags($req))) 
+        if(!($this->validateParagraphContent($req) && $this->validateParagraphTags($req)))
             return $this->sendInvalidResponse("create paragraph");
 
         $input = $req->all();
@@ -47,7 +47,7 @@ class ParagraphController extends Controller
 
     public function update(Request $req){
         if(!($this->validateEditAccess($req) && $this->validateParagraphContent($req)))
-            return $this->sendInvalidResponse("update paragraph");        
+            return $this->sendInvalidResponse("update paragraph");
 
         try {
             $paragraph = $this->repo->update($req->id, $req->all());
@@ -61,7 +61,7 @@ class ParagraphController extends Controller
     public function delete(Request $req) {
         if(!$this->validateEditAccess($req))
             return $this->sendInvalidResponse("delete paragraph");
-        
+
         try {
             $this->repo->delete($req->id);
             return response()->json(["message" => "success"], 200);
@@ -115,7 +115,7 @@ class ParagraphController extends Controller
     private function validateParagraphContent(Request $req){
 
         $validator = Validator::make($req->all(), [
-            'content' => 'required|string|max:1000',
+            'content' => 'required|string|max:5000',
             'note' => 'nullable|string|max:1000'
         ]);
 
